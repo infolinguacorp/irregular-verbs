@@ -478,6 +478,16 @@
       <select id="letraSelect" aria-label="Filtrar por letra"></select>
     </div>
 
+    <div class="fp-group">
+      <label for="patronSelect">Patrón de conjugación</label>
+      <select id="patronSelect" aria-label="Filtrar por patrón de conjugación">
+        <option value="">Todos los patrones</option>
+        <option value="Igual en las 3 formas">Igual en las 3 formas (43)</option>
+        <option value="Pasado = Participio">Pasado = Participio (137)</option>
+        <option value="Las 3 formas distintas">Las 3 formas distintas (123)</option>
+      </select>
+    </div>
+
     <div class="fp-stats">
       <div>303 — Verbos irregulares</div>
       <div>360 — Significados en total</div>
@@ -509,7 +519,8 @@ const IDX = [{"present": "abide", "past": "abode/abided", "participle": "abode/a
 
 let state = {
   query: '',
-  letter: null
+  letter: null,
+  pattern: null
 };
 
 const alphaRail = document.getElementById('alphaRail');
@@ -546,6 +557,16 @@ function renderAlphaRail(){
     state.letter = sel.value || null;
     render();
   });
+
+  // Pattern filter
+  const patronSel = document.getElementById('patronSelect');
+  if(patronSel && !patronSel.dataset.bound){
+    patronSel.dataset.bound = '1';
+    patronSel.addEventListener('change', () => {
+      state.pattern = patronSel.value || null;
+      render();
+    });
+  }
 }
 
 function escapeHtml(s){
@@ -735,12 +756,14 @@ function render(){
 
   const data = IDX.filter(item => {
     if(state.letter && item.present[0].toUpperCase() !== state.letter) return false;
+    if(state.pattern && item.pattern !== state.pattern) return false;
     return matchesGlossary(item, q);
   });
 
   resultCountEl.textContent = data.length + ' resultado' + (data.length===1?'':'s');
   const filterBits = [];
   if(state.letter) filterBits.push('letra: ' + state.letter);
+  if(state.pattern) filterBits.push('patrón: ' + state.pattern);
   activeFiltersEl.textContent = filterBits.join(' · ');
 
   if(observer) observer.disconnect();
