@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verbos Irregulares — LinguaCorp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FFFFFF;
+    --paper-2: #F7F1FE;
+    --ink: #0D0A1F;
+    --ink-soft: #5B5770;
+    --surface: #FFFFFF;
+    --line: #E4DEF5;
+    --violet: #3A0BFF;
+    --violet-soft: #EDE7FF;
+    --plum: #4F26C8;
+    --navy: #06012E;
+    --shadow: 0 1px 2px rgba(13,10,31,0.05), 0 8px 24px rgba(13,10,31,0.06);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Montserrat',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background: var(--violet-soft); }
+
+  a{color:inherit;}
+
+  .skip-link{position:absolute; left:-999px; top:0;}
+  .skip-link:focus{left:8px; top:8px; background:var(--ink); color:#fff; padding:8px 12px; border-radius:6px; z-index:100;}
+
+  header.top{
+    position:sticky; top:0; z-index:20;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding: 12px clamp(16px,4vw,48px) 0;
+  }
+  .brand-row{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    max-width:1100px; margin:0 auto;
+  }
+  .brand-lockup{
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand-lockup img{
+    width:52px; height:52px; border-radius:50%; flex-shrink:0;
+  }
+  .eyebrow{
+    font-family:'Montserrat', sans-serif;
+    font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--violet); font-weight:700;
+  }
+  .brand-link{
+    font-family:'Montserrat', sans-serif;
+    font-size:12px; font-weight:600; letter-spacing:.02em;
+    color:var(--plum); text-decoration:none;
+    border-bottom:1px solid transparent;
+    white-space:nowrap;
+  }
+  .brand-link:hover{ border-color: var(--plum); }
+
+  h1{
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+    font-size:clamp(22px, 3vw, 32px);
+    letter-spacing:-0.01em;
+    margin: 6px 0 3px;
+    max-width:1100px; margin-left:auto; margin-right:auto;
+  }
+  h1 .accent{ color:var(--violet); }
+  .sub{
+    max-width:1100px; margin:0 auto 12px;
+    color:var(--ink-soft);
+    font-size:13.5px;
+    font-weight:500;
+    max-width:620px;
+  }
+
+  .controls{
+    max-width:1100px; margin:0 auto;
+    padding-bottom:10px;
+  }
+
+  .search-row{
+    display:flex; gap:10px; align-items:center;
+    margin-bottom:8px;
+  }
+  .search-wrap{
+    position:relative; flex:1;
+  }
+  .search-wrap svg{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    width:16px; height:16px; opacity:.5;
+  }
+  input[type="search"]{
+    width:100%;
+    font-family:'Montserrat';
+    font-weight:500;
+    font-size:15px;
+    padding:11px 14px 11px 38px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    color:var(--ink);
+    outline:none;
+  }
+  input[type="search"]:focus{
+    border-color:var(--violet);
+    background:var(--surface);
+    box-shadow:0 0 0 3px var(--violet-soft);
+  }
+  input[type="search"]::-webkit-search-cancel-button{ cursor:pointer; }
+
+  .tabs{
+    display:flex; gap:4px; background:var(--paper-2); border-radius:10px; padding:4px;
+    width:max-content;
+  }
+  .tab{
+    font-family:'Montserrat'; font-weight:700; font-size:13px;
+    padding:8px 14px; border-radius:7px; border:none; background:transparent;
+    color:var(--ink-soft); cursor:pointer;
+    white-space:nowrap;
+  }
+  .tab[aria-selected="true"]{
+    background:var(--violet); color:#fff; box-shadow:var(--shadow);
+  }
+  .tab:focus-visible, .chip:focus-visible, .row:focus-visible, input:focus-visible{
+    outline:2px solid var(--violet); outline-offset:2px;
+  }
+
+  .particle-rail-wrap{
+    margin-top:2px;
+  }
+  .particle-label{
+    font-family:'Montserrat', sans-serif; font-weight:700; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:4px; display:block;
+  }
+  .particle-rail{
+    display:flex; gap:7px; overflow-x:auto; padding-bottom:6px; scrollbar-width:thin;
+  }
+  .particle-rail::-webkit-scrollbar{ height:5px; }
+  .particle-rail::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+
+  .chip{
+    font-family:'Montserrat', sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    padding:5px 10px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-soft);
+    cursor:pointer;
+    white-space:nowrap;
+    display:flex; align-items:center; gap:6px;
+    flex-shrink:0;
+    transition:background .12s, color .12s, border-color .12s;
+  }
+  .chip .n{ opacity:.55; font-size:11px; }
+  .chip:hover{ border-color: var(--violet); }
+  .chip[aria-pressed="true"]{
+    background:var(--navy); color:#fff; border-color:var(--navy);
+  }
+  .chip[aria-pressed="true"] .n{ opacity:.65; }
+
+  .chip.letter{
+    width:28px; height:28px; padding:0;
+    justify-content:center;
+    border-radius:8px;
+    font-weight:700;
+  }
+
+  main{
+    padding: 12px 0 80px;
+  }
+
+  .meta-row{ display:none; }
+
+  .list{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:var(--surface);
+    overflow:hidden;
+  }
+
+  .row{
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+  }
+  .row:last-child{ border-bottom:none; }
+
+  .row-head{
+    display:flex; align-items:center; gap:12px;
+    padding:13px 16px;
+  }
+  .row-head:hover{ background:var(--paper); }
+
+  .verb{
+    font-family:'Montserrat', sans-serif; font-weight:700; font-size:16px;
+    color:var(--ink);
+  }
+  .verb .particle{
+    color:var(--violet);
+    font-weight:800;
+  }
+  .preview{
+    font-size:13px; color:var(--ink-soft);
+    font-weight:500;
+    flex:1;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    min-width:0;
+  }
+  .tag{
+    font-family:'Montserrat', sans-serif; font-weight:700; font-size:10px; letter-spacing:.05em;
+    padding:3px 7px; border-radius:5px;
+    background:var(--violet-soft); color:var(--plum);
+    white-space:nowrap; text-transform:uppercase;
+    flex-shrink:0;
+  }
+  .tema-tag{
+    display:inline-block;
+    font-family:'Montserrat', sans-serif; font-weight:700; font-size:10px;
+    padding:4px 10px; border-radius:20px;
+    background:var(--paper-2); color:var(--plum);
+    margin-top:10px;
+  }
+  .count-badge{
+    font-family:'Montserrat', sans-serif; font-weight:600; font-size:10.5px;
+    color:var(--ink-soft); opacity:.65; flex-shrink:0;
+  }
+  .caret{
+    width:9px; height:9px; flex-shrink:0;
+    border-right:1.5px solid var(--ink-soft); border-bottom:1.5px solid var(--ink-soft);
+    transform:rotate(-45deg);
+    transition:transform .15s;
+    margin-right:2px;
+  }
+  .row[aria-expanded="true"] .caret{ transform:rotate(45deg); margin-top:-4px; }
+
+  .row-body{
+    display:none;
+    padding: 2px 16px 16px 44px;
+  }
+  .row[aria-expanded="true"] .row-body{ display:block; }
+  .row-body ol{
+    margin:0; padding-left:18px;
+    font-size:14.5px; line-height:1.65;
+    font-weight:500;
+    color:var(--ink);
+  }
+  .row-body li{ margin-bottom:3px; }
+  .row-body li::marker{
+    font-weight:700; color:var(--violet); font-size:13px;
+  }
+
+  .reveal-btn{
+    margin-top:10px;
+    font-family:'Montserrat', sans-serif;
+    font-weight:700; font-size:12px;
+    color:var(--plum);
+    background:var(--violet-soft);
+    border:1px dashed var(--plum);
+    border-radius:20px;
+    padding:6px 13px;
+    cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .reveal-btn:hover{ background:var(--violet); color:#fff; border-style:solid; }
+
+  .es-list{
+    display:none;
+    margin:10px 0 0; padding: 10px 0 0 18px;
+    border-top:1px dashed var(--line);
+    font-size:14.5px; line-height:1.65; font-weight:500;
+    color:var(--plum);
+  }
+  .es-list.show{ display:block; }
+  .es-list li::marker{ color:var(--plum); font-weight:700; font-size:13px; }
+
+  .example-box{
+    margin-top:10px;
+    padding:10px 14px;
+    background:var(--paper-2);
+    border-left:3px solid var(--violet);
+    border-radius:6px;
+  }
+  .example-label{
+    font-family:'Montserrat', sans-serif;
+    font-weight:700; font-size:10px; letter-spacing:.1em;
+    color:var(--violet); text-transform:uppercase;
+    display:block; margin-bottom:3px;
+  }
+  .example-text{
+    margin:0;
+    font-size:14px; font-style:italic; line-height:1.55;
+    color:var(--ink-soft);
+  }
+  .example-text strong{
+    font-style:normal; font-weight:700; color:var(--ink);
+  }
+
+  .empty{
+    padding:60px 20px; text-align:center; color:var(--ink-soft);
+    font-family:'Montserrat', sans-serif; font-weight:600; font-size:16px;
+  }
+
+  footer{
+    padding: 10px 0 40px;
+    font-family:'Montserrat', sans-serif; font-weight:600; font-size:11px; color:var(--ink-soft);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+  footer a{ color:var(--plum); text-decoration:none; }
+
+  .stats-strip{
+    background:var(--navy);
+    color:#fff;
+  }
+  .stats-inner{
+    max-width:1100px; margin:0 auto;
+    padding: 12px clamp(16px,4vw,48px);
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:14px;
+  }
+  .stat{
+    display:flex; flex-direction:column; gap:1px;
+  }
+  .stat strong{
+    font-family:'Montserrat', sans-serif; font-weight:800; font-size:22px;
+    color:var(--violet-soft);
+  }
+  .stat span{
+    font-size:11px; font-weight:600; color:#C9C4E8;
+    letter-spacing:.01em;
+  }
+
+  @media (max-width:640px){
+    .stats-inner{ grid-template-columns:repeat(2, 1fr); }
+  }
+
+  @media (max-width:560px){
+    .preview{ display:none; }
+    .row-body{ padding-left:16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; scroll-behavior:auto !important; }
+  }
+  .layout{ display:flex; min-height:100vh; }
+  .sidebar{
+    width:220px; flex-shrink:0; background:#06012E;
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+    padding:20px 14px; display:flex; flex-direction:column; gap:2px;
+  }
+  .sidebar-brand{ display:flex; align-items:center; gap:9px; margin-bottom:22px; padding:0 8px; }
+  .sidebar-brand img{ width:30px; height:30px; border-radius:50%; flex-shrink:0; }
+  .sidebar-brand span{ color:#fff; font-weight:700; font-size:13.5px; }
+  .nav-item{
+    display:flex; align-items:center; gap:10px; padding:10px 10px; border-radius:8px;
+    font-size:13px; font-weight:600; color:#C9C4E8; transition:background .12s, color .12s;
+  }
+  a.nav-item:hover{ background:rgba(255,255,255,0.06); color:#fff; }
+  .nav-item.active{ background:#3A0BFF; color:#fff; }
+  .nav-item.disabled{ color:#6A6590; cursor:default; }
+  .nav-item .ic{ width:17px; height:17px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .nav-divider{ height:1px; background:#241E52; margin:12px 6px; }
+  .nav-section-label{ font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#6A6590; padding:4px 10px 6px; }
+  .sidebar-footer{ margin-top:auto; padding:10px 8px 4px; font-size:10.5px; color:#6A6590; line-height:1.5; }
+  .content{ flex:1; min-width:0; }
+
+  @media (max-width:760px){
+    .layout{ flex-direction:column; }
+    .sidebar{
+      width:100%; height:auto; position:relative; flex-direction:row; align-items:center;
+      overflow-x:auto; overflow-y:hidden; padding:12px 14px; gap:6px;
+    }
+    .sidebar-brand{ margin-bottom:0; }
+    .sidebar-brand span{ display:none; }
+    .nav-divider{ width:1px; height:24px; margin:0 4px; }
+    .nav-section-label{ display:none; }
+    .sidebar-footer{ display:none; }
+    .nav-item span.label{ display:none; }
+    .nav-item{ padding:9px; }
+  }
+
+  .layout3{ display:flex; min-height:100vh; }
+  .filter-panel{
+    width:200px; flex-shrink:0; background:var(--paper-2);
+    border-right:1px solid var(--line);
+    padding:22px 16px; position:sticky; top:0; height:100vh; overflow-y:auto;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .filter-panel .fp-title{
+    font-weight:900; font-size:18px; margin:0 0 2px;
+  }
+  .filter-panel .fp-sub{
+    font-size:11.5px; color:var(--ink-soft); font-weight:600; margin:0 0 4px; line-height:1.4;
+  }
+  .fp-group label{
+    display:block; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:6px;
+  }
+  .fp-group select, .fp-group input[type=search]{
+    width:100%; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:600;
+    padding:9px 10px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); outline:none;
+  }
+  .fp-group select:focus, .fp-group input:focus{ border-color:var(--violet); }
+  .fp-stats{ margin-top:auto; font-size:11px; color:var(--ink-soft); font-weight:600; line-height:1.7; }
+  .results-col{ flex:1; min-width:0; padding: 22px clamp(16px,2.5vw,32px); }
+  @media (max-width:900px){
+    .layout3{ flex-direction:column; }
+    .filter-panel{ width:100%; height:auto; position:relative; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <img src="data:image/png;base64,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" alt="LinguaCorp">
+    <span>LinguaCorp</span>
+  </div>
+
+  <a class="nav-item" href="https://academy.linguacorp.com.co/">
+    <span class="ic">🏠</span><span class="label">Inicio</span>
+  </a>
+  <a class="nav-item" href="https://infolinguacorp.github.io/phrasal-verbs-linguacorp/">
+    <span class="ic">📖</span><span class="label">Phrasal verbs</span>
+  </a>
+  <a class="nav-item" href="https://infolinguacorp.github.io/idioms-linguacorp/">
+    <span class="ic">💬</span><span class="label">Idioms</span>
+  </a>
+  <a class="nav-item" href="https://infolinguacorp.github.io/refranes-linguacorp/">
+    <span class="ic">🗣️</span><span class="label">Refranes y dichos</span>
+  </a>
+  <a class="nav-item active" href="https://infolinguacorp.github.io/irregular-verbs-linguacorp/">
+    <span class="ic">🔤</span><span class="label">Verbos irregulares</span>
+  </a>
+  <a class="nav-item" href="https://infolinguacorp.github.io/placement-test-linguacorp/">
+    <span class="ic">📝</span><span class="label">Test</span>
+  </a>
+
+  <div class="nav-divider"></div>
+  <p class="nav-section-label">Próximamente</p>
+
+  <span class="nav-item disabled"><span class="ic">🛠️</span><span class="label">Vocabulario Especializado</span></span>
+  <span class="nav-item disabled"><span class="ic">💼</span><span class="label">Business English</span></span>
+
+  <div class="sidebar-footer">Academic Support<br>© 2026 LinguaCorp</div>
+</aside>
+<div class="content">
+
+<div class="layout3">
+  <div class="filter-panel">
+    <div>
+      <p class="fp-title">Verbos <span class="accent">Irregulares</span></p>
+      <p class="fp-sub">Busca un verbo irregular, filtra por patrón de conjugación, y aprende su significado.</p>
+    </div>
+
+    <div class="fp-group">
+      <label for="search">Buscar</label>
+      <input type="search" id="search" placeholder="Busca un verbo o significado… (ej: break, go, buy)" aria-label="Buscar">
+    </div>
+
+    <div class="fp-group">
+      <label for="letraSelect">Letra</label>
+      <select id="letraSelect" aria-label="Filtrar por letra"></select>
+    </div>
+
+    <div class="fp-stats">
+      <div>303 — Verbos irregulares</div>
+      <div>360 — Significados en total</div>
+      <div>ES/EN — Traducción y ejemplos</div>
+      <div>100% — Gratis, sin registro</div>
+      
+    </div>
+  </div>
+
+  <div class="results-col">
+
+<main id="main">
+  <div class="meta-row">
+    <span id="resultCount">— resultados</span>
+    <span id="activeFilters"></span>
+  </div>
+  <div class="list" id="list"></div>
+</main>
+  </div>
+</div>
+
+
+<footer>
+  <span>LinguaCorp — Business English School (BES) © 2026 · El mundo en tus manos</span>
+</footer>
+
+<script>
+const IDX = [{"present": "abide", "past": "abode/abided", "participle": "abode/abided", "meanings": ["soportar / cumplir (con)"], "pattern": "Las 3 formas distintas", "note": "Común en 'abide by the rules'.", "examples": [{"en": "You must abide by the rules.", "es": "Debes cumplir con las reglas."}]},{"present": "alight", "past": "alit/alighted", "participle": "alit/alighted", "meanings": ["bajarse / posarse"], "pattern": "Pasado = Participio", "examples": [{"en": "The bird alighted on the branch.", "es": "El pájaro se posó en la rama."}]},{"present": "arise", "past": "arose", "participle": "arisen", "meanings": ["surgir", "Presentarse"], "pattern": "Las 3 formas distintas", "note": "Presentarse algún tipo de inconveniente, por ejemplo.", "examples": [{"en": "A problem arose during the meeting.", "es": "Surgió un problema durante la reunión."}, {"en": "If the opportunity arises, take it.", "es": "Si se presenta la oportunidad, apróvechala."}]},{"present": "awake", "past": "awoke", "participle": "awoken", "meanings": ["despertar"], "pattern": "Las 3 formas distintas", "note": "Despertar(se) Despertar a alguien es WAKE UP", "examples": [{"en": "She awoke early this morning.", "es": "Ella despertó temprano esta mañana."}]},{"present": "backslide", "past": "backslid", "participle": "backslidden", "meanings": ["recaer / reincidir (en un mal hábito)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He backslid into his old habits after a stressful week.", "es": "Recayó en sus viejos hábitos después de una semana estresante."}]},{"present": "be", "past": "was/were", "participle": "been", "meanings": ["ser/estar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "They were very tired after the trip.", "es": "Estaban muy cansados después del viaje."}]},{"present": "be born", "past": "was/were born", "participle": "been born", "meanings": ["nacer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She was born in Bogotá.", "es": "Ella nació en Bogotá."}]},{"present": "bear", "past": "bore", "participle": "born", "meanings": ["soportar", "sostener / tolerar"], "pattern": "Las 3 formas distintas", "note": "Bear, como sustantivo, es OSO", "examples": [{"en": "I can't bear this noise any longer.", "es": "No puedo soportar este ruido más."}, {"en": "The bridge can bear a heavy load.", "es": "El puente puede sostener una carga pesada."}]},{"present": "beat", "past": "beat", "participle": "beaten", "meanings": ["golpear", "vencer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He beat the drum loudly.", "es": "Él golpeó el tambor con fuerza."}, {"en": "Our team beat them 3 to 1.", "es": "Nuestro equipo los venció 3 a 1."}]},{"present": "become", "past": "became", "participle": "become", "meanings": ["llegar a ser", "convertir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She became a doctor after years of study.", "es": "Ella llegó a ser doctora después de años de estudio."}, {"en": "The warehouse became a modern office.", "es": "La bodega se convirtió en una oficina moderna."}]},{"present": "befall", "past": "befell", "participle": "befallen", "meanings": ["suceder / ocurrir (algo malo)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "A great misfortune befell them.", "es": "Les sucedió una gran desgracia."}]},{"present": "beget", "past": "begot/begat", "participle": "begotten/begot", "meanings": ["engendrar / generar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "This decision will beget further problems.", "es": "Esta decisión generará más problemas."}]},{"present": "begin", "past": "began", "participle": "begun", "meanings": ["comenzar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The meeting began at nine sharp.", "es": "La reunión comenzó a las nueve en punto."}]},{"present": "behold", "past": "beheld", "participle": "beheld", "meanings": ["contemplar / ver (literario)"], "pattern": "Pasado = Participio", "examples": [{"en": "They beheld a beautiful landscape.", "es": "Contemplaron un hermoso paisaje."}]},{"present": "bend", "past": "bent", "participle": "bent", "meanings": ["doblar", "inclinar / torcer"], "pattern": "Pasado = Participio", "note": "En fútbol, BEND significa darle al balón con curva", "examples": [{"en": "He bent the wire into a circle.", "es": "Él dobló el alambre en forma de círculo."}, {"en": "She bent down to pick up the pen.", "es": "Ella se inclinó para recoger el lápiz."}]},{"present": "bereave", "past": "bereft/bereaved", "participle": "bereft/bereaved", "meanings": ["privar / dejar desolado"], "pattern": "Pasado = Participio", "examples": [{"en": "The war bereaved many families.", "es": "La guerra dejó desoladas a muchas familias."}]},{"present": "beseech", "past": "besought/beseeched", "participle": "besought/beseeched", "meanings": ["rogar / suplicar"], "pattern": "Pasado = Participio", "examples": [{"en": "She besought him to stay.", "es": "Le rogó que se quedara."}]},{"present": "beset", "past": "beset", "participle": "beset", "meanings": ["asediar / acosar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The city was beset by problems.", "es": "La ciudad estaba asediada por problemas."}]},{"present": "bespeak", "past": "bespoke", "participle": "bespoken", "meanings": ["indicar / ser señal de (literario)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Her calm manner bespoke years of experience.", "es": "Su actitud tranquila era señal de años de experiencia."}]},{"present": "bestride", "past": "bestrode", "participle": "bestridden", "meanings": ["montar a horcajadas"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He bestrode the horse confidently.", "es": "Montó el caballo con confianza."}]},{"present": "bet", "past": "bet", "participle": "bet", "meanings": ["apostar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "I bet you can't finish this in an hour.", "es": "Apuesto a que no puedes terminar esto en una hora."}]},{"present": "betake", "past": "betook", "participle": "betaken", "meanings": ["dirigirse / recurrir a"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He betook himself to the library.", "es": "Se dirigió a la biblioteca."}]},{"present": "bid", "past": "bid", "participle": "bid", "meanings": ["pujar / ofertar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "They bid $500 for the antique chair.", "es": "Pujaron 500 dólares por la silla antigua."}]},{"present": "bide", "past": "bided/bode", "participle": "bided/bidden", "meanings": ["esperar / aguardar"], "pattern": "Las 3 formas distintas", "note": "Común en 'bide one's time'.", "examples": [{"en": "She decided to bide her time.", "es": "Decidió aguardar su momento."}]},{"present": "bind", "past": "bound", "participle": "bound", "meanings": ["atar", "unir / enlazar"], "pattern": "Pasado = Participio", "examples": [{"en": "She bound the papers together with string.", "es": "Ella ató los papeles con una cuerda."}, {"en": "The contract binds both parties legally.", "es": "El contrato une legalmente a ambas partes."}]},{"present": "bite", "past": "bit", "participle": "bitten", "meanings": ["morder"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The dog bit the mailman.", "es": "El perro mordió al cartero."}]},{"present": "bleed", "past": "bled", "participle": "bled", "meanings": ["sangrar"], "pattern": "Pasado = Participio", "examples": [{"en": "His finger was bleeding after the cut.", "es": "Su dedo estaba sangrando después del corte."}]},{"present": "bless", "past": "blessed/blest", "participle": "blessed/blest", "meanings": ["bendecir"], "pattern": "Pasado = Participio", "examples": [{"en": "The priest blessed the couple.", "es": "El sacerdote bendijo a la pareja."}]},{"present": "blow", "past": "blew", "participle": "blown", "meanings": ["soplar", "reventar / arruinar (blow a chance/deal)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The wind blew hard all night.", "es": "El viento sopló fuerte toda la noche."}, {"en": "He blew his chance to get the promotion.", "es": "Arruinó su oportunidad de conseguir el ascenso."}]},{"present": "break", "past": "broke", "participle": "broken", "meanings": ["romper", "dar (una noticia) — break the news"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She broke the vase by accident.", "es": "Ella rompió el florero por accidente."}, {"en": "They broke the news to the team this morning.", "es": "Le dieron la noticia al equipo esta mañana."}]},{"present": "breastfeed", "past": "breastfed", "participle": "breastfed", "meanings": ["amamantar"], "pattern": "Pasado = Participio", "examples": [{"en": "She breastfed her baby for six months.", "es": "Amamantó a su bebé durante seis meses."}]},{"present": "breed", "past": "bred", "participle": "bred", "meanings": ["criar", "engendrar / reproducirse"], "pattern": "Pasado = Participio", "examples": [{"en": "They breed horses on that farm.", "es": "Crían caballos en esa granja."}, {"en": "Bacteria breed rapidly in warm conditions.", "es": "Las bacterias se reproducen rápidamente en condiciones cálidas."}]},{"present": "bring", "past": "brought", "participle": "brought", "meanings": ["traer"], "pattern": "Pasado = Participio", "examples": [{"en": "Could you bring me a glass of water?", "es": "¿Me podrías traer un vaso de agua?"}]},{"present": "broadcast", "past": "broadcast", "participle": "broadcast", "meanings": ["transmitir (radio/TV)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The channel broadcast the game live.", "es": "El canal transmitió el partido en vivo."}]},{"present": "browbeat", "past": "browbeat", "participle": "browbeaten", "meanings": ["intimidar / amedrentar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He tried to browbeat the witness.", "es": "Intentó intimidar al testigo."}]},{"present": "build", "past": "built", "participle": "built", "meanings": ["construir", "forjar / desarrollar (una relación, una reputación)"], "pattern": "Pasado = Participio", "examples": [{"en": "They built a new bridge over the river.", "es": "Construyeron un nuevo puente sobre el río."}, {"en": "She has built a strong reputation in the industry.", "es": "Ella ha forjado una sólida reputación en la industria."}]},{"present": "burn", "past": "burnt", "participle": "burnt", "meanings": ["quemar"], "pattern": "Pasado = Participio", "note": "La forma regular 'burned' es más común en inglés americano; 'burnt' predomina en inglés británico.", "examples": [{"en": "He burnt the toast this morning.", "es": "Él quemó el pan tostado esta mañana."}]},{"present": "burst", "past": "burst", "participle": "burst", "meanings": ["reventar / estallar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The balloon burst with a loud pop.", "es": "El globo estalló con un fuerte estallido."}]},{"present": "bust", "past": "bust/busted", "participle": "bust/busted", "meanings": ["romper / arrestar (informal)"], "pattern": "Igual en las 3 formas", "note": "Muy común en inglés americano.", "examples": [{"en": "He busted the window by accident.", "es": "Rompió la ventana por accidente."}]},{"present": "buy", "past": "bought", "participle": "bought", "meanings": ["comprar"], "pattern": "Pasado = Participio", "examples": [{"en": "We bought a new car last week.", "es": "Compramos un carro nuevo la semana pasada."}]},{"present": "cast", "past": "cast", "participle": "cast", "meanings": ["lanzar / elegir el reparto (de una obra)", "asignar un papel a un actor"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The director cast her in the lead role.", "es": "El director la eligió para el papel principal."}, {"en": "They cast a well-known actor as the villain.", "es": "Asignaron a un actor conocido como el villano."}]},{"present": "catch", "past": "caught", "participle": "caught", "meanings": ["atrapar", "entender / captar (didn't catch that)"], "pattern": "Pasado = Participio", "examples": [{"en": "He caught the ball with one hand.", "es": "Él atrapó la pelota con una mano."}, {"en": "Sorry, I didn't catch your name.", "es": "Perdón, no capté tu nombre."}]},{"present": "chide", "past": "chid/chided", "participle": "chidden/chid/chided", "meanings": ["regañar / reprender"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She chided the children for being late.", "es": "Regañó a los niños por llegar tarde."}]},{"present": "choose", "past": "chose", "participle": "chosen", "meanings": ["elegir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She chose the blue dress for the party.", "es": "Ella eligió el vestido azul para la fiesta."}]},{"present": "cleave", "past": "cleft", "participle": "cleft", "meanings": ["hender / partir en dos"], "pattern": "Pasado = Participio", "note": "Verbo poco común, con formas alternativas 'clove/cloven'. En el sentido de 'adherirse a algo' es regular: cleaved.", "examples": [{"en": "The axe cleft the log in two.", "es": "El hacha partió el tronco en dos."}]},{"present": "cling", "past": "clung", "participle": "clung", "meanings": ["aferrarse"], "pattern": "Pasado = Participio", "examples": [{"en": "The child clung to her mother's hand.", "es": "El niño se aferró a la mano de su madre."}]},{"present": "clothe", "past": "clothed/clad", "participle": "clothed/clad", "meanings": ["vestir / cubrir"], "pattern": "Pasado = Participio", "examples": [{"en": "She clothed the children warmly.", "es": "Vistió a los niños con ropa abrigada."}]},{"present": "come", "past": "came", "participle": "come", "meanings": ["venir", "llegar a ser / resultar (come true, come first)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She came to the party late.", "es": "Ella vino tarde a la fiesta."}, {"en": "Her dream finally came true.", "es": "Su sueño finalmente se hizo realidad."}]},{"present": "cost", "past": "cost", "participle": "cost", "meanings": ["costar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The repair cost more than expected.", "es": "La reparación costó más de lo esperado."}]},{"present": "creep", "past": "crept", "participle": "crept", "meanings": ["arrastrarse"], "pattern": "Pasado = Participio", "examples": [{"en": "The cat crept slowly toward the bird.", "es": "El gato se arrastró lentamente hacia el pájaro."}]},{"present": "crossbreed", "past": "crossbred", "participle": "crossbred", "meanings": ["cruzar (animales o plantas)"], "pattern": "Pasado = Participio", "examples": [{"en": "They crossbred two types of roses.", "es": "Cruzaron dos tipos de rosas."}]},{"present": "crow", "past": "crowed/crew", "participle": "crowed", "meanings": ["cacarear / alardear"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The rooster crowed at dawn.", "es": "El gallo cacareó al amanecer."}]},{"present": "cut", "past": "cut", "participle": "cut", "meanings": ["cortar", "recortar (gastos, presupuesto)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She cut the cake into eight pieces.", "es": "Ella cortó el pastel en ocho pedazos."}, {"en": "The company cut its budget by 10 percent.", "es": "La empresa recortó su presupuesto en un 10 por ciento."}]},{"present": "daydream", "past": "daydreamed/daydreamt", "participle": "daydreamed/daydreamt", "meanings": ["soñar despierto"], "pattern": "Pasado = Participio", "examples": [{"en": "He daydreamed during the meeting.", "es": "Soñó despierto durante la reunión."}]},{"present": "deal", "past": "dealt", "participle": "dealt", "meanings": ["repartir", "lidiar"], "pattern": "Pasado = Participio", "examples": [{"en": "He dealt the cards to each player.", "es": "Él repartió las cartas a cada jugador."}, {"en": "She has to deal with a difficult client today.", "es": "Ella tiene que lidiar con un cliente difícil hoy."}]},{"present": "deep-freeze", "past": "deep-froze", "participle": "deep-frozen", "meanings": ["congelar profundamente"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She deep-froze the leftovers.", "es": "Congeló profundamente las sobras."}]},{"present": "dig", "past": "dug", "participle": "dug", "meanings": ["cavar"], "pattern": "Pasado = Participio", "examples": [{"en": "They dug a hole to plant the tree.", "es": "Cavaron un hoyo para plantar el árbol."}]},{"present": "disprove", "past": "disproved", "participle": "disproven", "meanings": ["refutar / desmentir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "New evidence disproved the old theory.", "es": "Nueva evidencia refutó la vieja teoría."}]},{"present": "dive", "past": "dove/dived", "participle": "dived", "meanings": ["zambullirse / bucear"], "pattern": "Las 3 formas distintas", "note": "En inglés americano 'dove' es común para el pasado.", "examples": [{"en": "He dove into the pool.", "es": "Se zambulló en la piscina."}]},{"present": "do", "past": "did", "participle": "done", "meanings": ["hacer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She did all her homework before dinner.", "es": "Ella hizo toda su tarea antes de cenar."}]},{"present": "draw", "past": "drew", "participle": "drawn", "meanings": ["dibujar", "retirar (dinero) / sacar una conclusión"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He drew a picture of his house.", "es": "Él dibujó un cuadro de su casa."}, {"en": "She drew $200 from the ATM.", "es": "Ella retiró 200 dólares del cajero."}]},{"present": "dream", "past": "dreamt", "participle": "dreamt", "meanings": ["soñar"], "pattern": "Pasado = Participio", "examples": [{"en": "I dreamt about flying last night.", "es": "Anoche soñé que volaba."}]},{"present": "drink", "past": "drank", "participle": "drunk", "meanings": ["beber"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He drank a glass of orange juice.", "es": "Él bebió un vaso de jugo de naranja."}]},{"present": "drive", "past": "drove", "participle": "driven", "meanings": ["conducir", "impulsar / motivar (drive change)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She drove to work this morning.", "es": "Ella condujo al trabajo esta mañana."}, {"en": "His passion drives everything he does.", "es": "Su pasión impulsa todo lo que hace."}]},{"present": "dwell", "past": "dwelt", "participle": "dwelt", "meanings": ["habitar / morar", "detenerse en un tema (dwell on)"], "pattern": "Pasado = Participio", "examples": [{"en": "Few people dwell in that remote village.", "es": "Pocas personas habitan en ese pueblo remoto."}, {"en": "Try not to dwell on the mistake too long.", "es": "Trata de no detenerte demasiado en el error."}]},{"present": "eat", "past": "ate", "participle": "eaten", "meanings": ["comer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "They ate dinner together as a family.", "es": "Cenaron juntos en familia."}]},{"present": "fall", "past": "fell", "participle": "fallen", "meanings": ["caer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The book fell off the shelf.", "es": "El libro se cayó del estante."}]},{"present": "feed", "past": "fed", "participle": "fed", "meanings": ["alimentar", "alimentar / contribuir a (feed into a problem)"], "pattern": "Pasado = Participio", "examples": [{"en": "She feeds her dog twice a day.", "es": "Ella alimenta a su perro dos veces al día."}, {"en": "Poor communication fed into the misunderstanding.", "es": "La mala comunicación contribuyó al malentendido."}]},{"present": "feel", "past": "felt", "participle": "felt", "meanings": ["sentir"], "pattern": "Pasado = Participio", "examples": [{"en": "I felt nervous before the interview.", "es": "Me sentí nervioso antes de la entrevista."}]},{"present": "fight", "past": "fought", "participle": "fought", "meanings": ["pelear"], "pattern": "Pasado = Participio", "examples": [{"en": "The two brothers fought over the toy.", "es": "Los dos hermanos pelearon por el juguete."}]},{"present": "find", "past": "found", "participle": "found", "meanings": ["encontrar"], "pattern": "Pasado = Participio", "examples": [{"en": "She found her keys under the sofa.", "es": "Ella encontró sus llaves debajo del sofá."}]},{"present": "find out", "past": "found out", "participle": "found out", "meanings": ["averiguar"], "pattern": "Pasado = Participio", "examples": [{"en": "We found out the truth too late.", "es": "Averiguamos la verdad demasiado tarde."}]},{"present": "fit", "past": "fit/fitted", "participle": "fit/fitted", "meanings": ["caber / ajustar"], "pattern": "Igual en las 3 formas", "note": "En AmE a menudo 'fit' en pasado; en BrE 'fitted'.", "examples": [{"en": "The dress fit perfectly.", "es": "El vestido le quedó perfecto."}]},{"present": "flee", "past": "fled", "participle": "fled", "meanings": ["huir"], "pattern": "Pasado = Participio", "examples": [{"en": "The residents fled the city before the storm.", "es": "Los residentes huyeron de la ciudad antes de la tormenta."}]},{"present": "fling", "past": "flung", "participle": "flung", "meanings": ["lanzar / arrojar con fuerza"], "pattern": "Pasado = Participio", "examples": [{"en": "She flung the door open.", "es": "Ella abrió la puerta de un golpe."}]},{"present": "fly", "past": "flew", "participle": "flown", "meanings": ["volar", "pasar volando / pasar muy rápido (time flies)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The plane flew over the mountains.", "es": "El avión voló sobre las montañas."}, {"en": "Time really flew by during the trip.", "es": "El tiempo pasó volando durante el viaje."}]},{"present": "forbear", "past": "forbore", "participle": "forborne", "meanings": ["abstenerse (de hacer algo)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He forbore from commenting on the issue.", "es": "Se abstuvo de comentar sobre el tema."}]},{"present": "forbid", "past": "forbade", "participle": "forbidden", "meanings": ["prohibir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The rules forbid smoking indoors.", "es": "Las reglas prohíben fumar en interiores."}]},{"present": "forecast", "past": "forecast", "participle": "forecast", "meanings": ["pronosticar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "Analysts forecast strong sales this quarter.", "es": "Los analistas pronostican ventas fuertes este trimestre."}]},{"present": "foresee", "past": "foresaw", "participle": "foreseen", "meanings": ["prever"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Nobody foresaw such a big change.", "es": "Nadie previó un cambio tan grande."}]},{"present": "foretell", "past": "foretold", "participle": "foretold", "meanings": ["predecir / vaticinar"], "pattern": "Pasado = Participio", "examples": [{"en": "The old story foretold a great flood.", "es": "El viejo relato vaticinaba una gran inundación."}]},{"present": "forget", "past": "forgot", "participle": "forgotten", "meanings": ["olvidar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He forgot his umbrella at the office.", "es": "Él olvidó su paraguas en la oficina."}]},{"present": "forgive", "past": "forgave", "participle": "forgiven", "meanings": ["perdonar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She forgave her friend for the mistake.", "es": "Ella perdonó a su amiga por el error."}]},{"present": "forgo", "past": "forwent", "participle": "forgone", "meanings": ["renunciar a / prescindir de"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He forwent dessert to save calories.", "es": "Renunció al postre para ahorrar calorías."}]},{"present": "forsake", "past": "forsook", "participle": "forsaken", "meanings": ["abandonar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He would never forsake his family.", "es": "Él nunca abandonaría a su familia."}]},{"present": "freeze", "past": "froze", "participle": "frozen", "meanings": ["congelar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She froze the leftovers for later.", "es": "Ella congeló las sobras para después."}]},{"present": "frostbite", "past": "frostbit", "participle": "frostbitten", "meanings": ["causar congelación"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The cold frostbit his fingers.", "es": "El frío le congeló los dedos."}]},{"present": "gainsay", "past": "gainsaid", "participle": "gainsaid", "meanings": ["contradecir / negar (formal)"], "pattern": "Pasado = Participio", "examples": [{"en": "No one could gainsay his results.", "es": "Nadie pudo contradecir sus resultados."}]},{"present": "get", "past": "got", "participle": "got/gotten", "meanings": ["obtener", "entender / captar (get it)"], "pattern": "Pasado = Participio", "examples": [{"en": "He got a promotion last month.", "es": "Él obtuvo un ascenso el mes pasado."}, {"en": "I don't get the joke.", "es": "No entiendo el chiste."}]},{"present": "ghostwrite", "past": "ghostwrote", "participle": "ghostwritten", "meanings": ["escribir como negro literario (sin firmar)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She ghostwrote the celebrity's memoir.", "es": "Ella escribió las memorias de la celebridad sin firmarlas."}]},{"present": "gild", "past": "gilded/gilt", "participle": "gilded/gilt", "meanings": ["dorar"], "pattern": "Pasado = Participio", "examples": [{"en": "They gilded the frame.", "es": "Doraron el marco."}]},{"present": "gird", "past": "girded/girt", "participle": "girded/girt", "meanings": ["ceñir / preparar(se)"], "pattern": "Pasado = Participio", "examples": [{"en": "He girded himself for the challenge.", "es": "Se preparó para el desafío."}]},{"present": "give", "past": "gave", "participle": "given", "meanings": ["dar", "ceder / dar de sí (an material that gives)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He gave her a gift for her birthday.", "es": "Él le dio un regalo por su cumpleaños."}, {"en": "The old floorboards gave under his weight.", "es": "Las tablas viejas del piso cedieron bajo su peso."}]},{"present": "go", "past": "went", "participle": "gone", "meanings": ["ir", "funcionar / marchar (how's it going?)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "They went to the beach on Saturday.", "es": "Fueron a la playa el sábado."}, {"en": "How's the new project going?", "es": "¿Cómo va el nuevo proyecto?"}]},{"present": "grave", "past": "graved", "participle": "graven/graved", "meanings": ["grabar (en piedra)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The name was graven on the stone.", "es": "El nombre estaba grabado en la piedra."}]},{"present": "grind", "past": "ground", "participle": "ground", "meanings": ["moler"], "pattern": "Pasado = Participio", "examples": [{"en": "She ground the coffee beans fresh.", "es": "Ella molió los granos de café frescos."}]},{"present": "grow", "past": "grew", "participle": "grown", "meanings": ["crecer", "llegar a ser / volverse (grow tired, grow old)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The plant grew quickly in the sun.", "es": "La planta creció rápido bajo el sol."}, {"en": "He grew tired of waiting.", "es": "Se cansó de esperar."}]},{"present": "hamstring", "past": "hamstrung", "participle": "hamstrung", "meanings": ["incapacitar / paralizar"], "pattern": "Pasado = Participio", "examples": [{"en": "The injury hamstrung the team.", "es": "La lesión paralizó al equipo."}]},{"present": "handwrite", "past": "handwrote", "participle": "handwritten", "meanings": ["escribir a mano"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She handwrote a letter to her grandmother.", "es": "Ella escribió a mano una carta a su abuela."}]},{"present": "hang", "past": "hung", "participle": "hung", "meanings": ["colgar"], "pattern": "Pasado = Participio", "examples": [{"en": "He hung the picture on the wall.", "es": "Él colgó el cuadro en la pared."}]},{"present": "have", "past": "had", "participle": "had", "meanings": ["tener"], "pattern": "Pasado = Participio", "examples": [{"en": "They had a great time at the party.", "es": "Se la pasaron muy bien en la fiesta."}]},{"present": "hear", "past": "heard", "participle": "heard", "meanings": ["oír"], "pattern": "Pasado = Participio", "examples": [{"en": "I heard a strange noise last night.", "es": "Anoche oí un ruido extraño."}]},{"present": "heave", "past": "heaved/hove", "participle": "heaved/hove", "meanings": ["levantar con esfuerzo"], "pattern": "Pasado = Participio", "examples": [{"en": "They heaved the box onto the truck.", "es": "Levantaron la caja con esfuerzo hasta el camión."}]},{"present": "hew", "past": "hewed", "participle": "hewn", "meanings": ["tallar / labrar (madera o piedra)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The sculptor hewed the statue from marble.", "es": "El escultor talló la estatua en mármol."}]},{"present": "hide", "past": "hid", "participle": "hidden", "meanings": ["esconderse"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The kids hid behind the couch.", "es": "Los niños se escondieron detrás del sofá."}]},{"present": "hit", "past": "hit", "participle": "hit", "meanings": ["golpear", "alcanzar / llegar a (hit a target, hit a milestone)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The ball hit the window.", "es": "La pelota golpeó la ventana."}, {"en": "Sales hit a record high this year.", "es": "Las ventas alcanzaron un récord este año."}]},{"present": "hold", "past": "held", "participle": "held", "meanings": ["sostener / mantener", "celebrar / llevar a cabo (un evento)"], "pattern": "Pasado = Participio", "examples": [{"en": "She held the baby carefully.", "es": "Ella sostuvo al bebé con cuidado."}, {"en": "The company held its annual meeting in April.", "es": "La empresa celebró su reunión anual en abril."}]},{"present": "hurt", "past": "hurt", "participle": "hurt", "meanings": ["herir", "doler"], "pattern": "Igual en las 3 formas", "examples": [{"en": "His comment hurt her feelings.", "es": "Su comentario hirió sus sentimientos."}, {"en": "My back hurts after the long trip.", "es": "Me duele la espalda después del largo viaje."}]},{"present": "inbreed", "past": "inbred", "participle": "inbred", "meanings": ["cruzar en consanguinidad"], "pattern": "Pasado = Participio", "examples": [{"en": "The animals were inbred for generations.", "es": "Los animales se cruzaron en consanguinidad durante generaciones."}]},{"present": "inlay", "past": "inlaid", "participle": "inlaid", "meanings": ["incrustar (madera, metal, piedras)"], "pattern": "Pasado = Participio", "examples": [{"en": "The table was inlaid with mother-of-pearl.", "es": "La mesa estaba incrustada con nácar."}]},{"present": "input", "past": "input", "participle": "input", "meanings": ["introducir datos"], "pattern": "Igual en las 3 formas", "examples": [{"en": "Please input your username and password.", "es": "Por favor introduce tu usuario y contraseña."}]},{"present": "interbreed", "past": "interbred", "participle": "interbred", "meanings": ["cruzarse entre especies"], "pattern": "Pasado = Participio", "examples": [{"en": "The two species can interbreed.", "es": "Las dos especies pueden cruzarse."}]},{"present": "interweave", "past": "interwove", "participle": "interwoven", "meanings": ["entrelazar / entretejer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The novel interweaves two different stories.", "es": "La novela entrelaza dos historias distintas."}]},{"present": "keep", "past": "kept", "participle": "kept", "meanings": ["guardar", "seguir / continuar haciendo algo (keep doing)"], "pattern": "Pasado = Participio", "examples": [{"en": "She kept the letter in a drawer.", "es": "Ella guardó la carta en un cajón."}, {"en": "He kept working despite the noise.", "es": "Él siguió trabajando a pesar del ruido."}]},{"present": "kneel", "past": "knelt", "participle": "knelt", "meanings": ["arrodillarse"], "pattern": "Pasado = Participio", "examples": [{"en": "He knelt down to tie his shoe.", "es": "Él se arrodilló para amarrarse el zapato."}]},{"present": "knit", "past": "knit", "participle": "knit", "meanings": ["tejer"], "pattern": "Igual en las 3 formas", "examples": [{"en": "My grandmother knit this sweater.", "es": "Mi abuela tejió este suéter."}]},{"present": "know", "past": "knew", "participle": "known", "meanings": ["saber", "conocer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "I know the answer to that question.", "es": "Yo sé la respuesta a esa pregunta."}, {"en": "She has known him since childhood.", "es": "Ella lo conoce desde la infancia."}]},{"present": "lay", "past": "laid", "participle": "laid", "meanings": ["poner / colocar"], "pattern": "Pasado = Participio", "examples": [{"en": "He laid the papers on the desk.", "es": "Él puso los papeles sobre el escritorio."}]},{"present": "lead", "past": "led", "participle": "led", "meanings": ["encabezar", "conducir / desembocar en (lead to a result)"], "pattern": "Pasado = Participio", "examples": [{"en": "She leads a team of ten engineers.", "es": "Ella encabeza un equipo de diez ingenieros."}, {"en": "That decision led to serious problems.", "es": "Esa decisión condujo a problemas graves."}]},{"present": "lean", "past": "leant", "participle": "leant", "meanings": ["Inclinar", "Apoyar"], "pattern": "Pasado = Participio", "note": "Apoyar como recostar algo sobre algo. Apoyar de dar apoyo moral, económico, etc. es support", "examples": [{"en": "He leaned forward to hear better.", "es": "Él se inclinó hacia adelante para oír mejor."}, {"en": "She leant the ladder against the wall.", "es": "Ella apoyó la escalera contra la pared."}]},{"present": "leap", "past": "leapt", "participle": "leapt", "meanings": ["saltar"], "pattern": "Pasado = Participio", "examples": [{"en": "The cat leapt onto the table.", "es": "El gato saltó sobre la mesa."}]},{"present": "learn", "past": "learnt", "participle": "learnt", "meanings": ["aprender"], "pattern": "Pasado = Participio", "examples": [{"en": "They learnt Spanish in just one year.", "es": "Aprendieron español en solo un año."}]},{"present": "leave", "past": "left", "participle": "left", "meanings": ["dejar", "quedar / restar (there's nothing left)"], "pattern": "Pasado = Participio", "examples": [{"en": "She left her phone at home.", "es": "Ella dejó su teléfono en casa."}, {"en": "There's nothing left in the fridge.", "es": "No queda nada en la nevera."}]},{"present": "lend", "past": "lent", "participle": "lent", "meanings": ["prestar"], "pattern": "Pasado = Participio", "examples": [{"en": "Could you lend me some money?", "es": "¿Me podrías prestar algo de dinero?"}]},{"present": "let", "past": "let", "participle": "let", "meanings": ["dejar", "alquilar (una propiedad, inglés británico)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "Her parents let her go to the concert.", "es": "Sus padres la dejaron ir al concierto."}, {"en": "They let the apartment to a young couple.", "es": "Alquilaron el apartamento a una pareja joven."}]},{"present": "lie", "past": "lay", "participle": "lain", "meanings": ["yacer", "radicar / residir (the problem lies in...)"], "pattern": "Las 3 formas distintas", "note": "No confundir con lie (verbo regular) que significa mentir", "examples": [{"en": "The old ruins lie just outside the town.", "es": "Las viejas ruinas yacen justo a las afueras del pueblo."}, {"en": "The problem lies in the design, not the code.", "es": "El problema radica en el diseño, no en el código."}]},{"present": "light", "past": "lit", "participle": "lit", "meanings": ["alumbrar / iluminar"], "pattern": "Pasado = Participio", "examples": [{"en": "Candles lit the whole room.", "es": "Las velas iluminaron toda la habitación."}]},{"present": "lose", "past": "lost", "participle": "lost", "meanings": ["perder"], "pattern": "Pasado = Participio", "examples": [{"en": "He lost his keys again.", "es": "Él perdió sus llaves otra vez."}]},{"present": "make", "past": "made", "participle": "made", "meanings": ["hacer", "lograr / llegar a tiempo (make it)"], "pattern": "Pasado = Participio", "examples": [{"en": "She made a cake for the party.", "es": "Ella hizo un pastel para la fiesta."}, {"en": "We made it to the airport just in time.", "es": "Logramos llegar al aeropuerto justo a tiempo."}]},{"present": "mean", "past": "meant", "participle": "meant", "meanings": ["significar"], "pattern": "Pasado = Participio", "examples": [{"en": "This word means 'happiness' in Spanish.", "es": "Esta palabra significa 'felicidad' en español."}]},{"present": "meet", "past": "met", "participle": "met", "meanings": ["conocer", "encontrarse (con alguien)"], "pattern": "Pasado = Participio", "examples": [{"en": "I met her at a conference last year.", "es": "La conocí en una conferencia el año pasado."}, {"en": "Let's meet at the coffee shop at noon.", "es": "Encontrémonos en la cafetería al mediodía."}]},{"present": "melt", "past": "melted", "participle": "molten", "meanings": ["derretir / fundir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The ice melted quickly in the sun.", "es": "El hielo se derritió rápido bajo el sol."}]},{"present": "misdeal", "past": "misdealt", "participle": "misdealt", "meanings": ["repartir mal (cartas)"], "pattern": "Pasado = Participio", "examples": [{"en": "He misdealt the cards.", "es": "Repartió mal las cartas."}]},{"present": "mishear", "past": "misheard", "participle": "misheard", "meanings": ["escuchar mal / entender mal (por el oído)"], "pattern": "Pasado = Participio", "examples": [{"en": "I misheard the address and got lost.", "es": "Entendí mal la dirección y me perdí."}]},{"present": "mislay", "past": "mislaid", "participle": "mislaid", "meanings": ["extraviar / perder algo (temporalmente)"], "pattern": "Pasado = Participio", "examples": [{"en": "He mislaid his glasses again.", "es": "Extravió sus lentes otra vez."}]},{"present": "mislead", "past": "misled", "participle": "misled", "meanings": ["engañar / llevar a conclusiones erróneas"], "pattern": "Pasado = Participio", "examples": [{"en": "The ad misled many customers.", "es": "El anuncio engañó a muchos clientes."}]},{"present": "misspell", "past": "misspelt/misspelled", "participle": "misspelt/misspelled", "meanings": ["escribir mal"], "pattern": "Pasado = Participio", "examples": [{"en": "She misspelt several words.", "es": "Escribió mal varias palabras."}]},{"present": "misspend", "past": "misspent", "participle": "misspent", "meanings": ["malgastar"], "pattern": "Pasado = Participio", "examples": [{"en": "He misspent his youth.", "es": "Malgastó su juventud."}]},{"present": "mistake", "past": "mistook", "participle": "mistaken", "meanings": ["equivocarse / errar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "I mistook her for her sister.", "es": "La confundí con su hermana."}]},{"present": "misunderstand", "past": "misunderstood", "participle": "misunderstood", "meanings": ["Malentender"], "pattern": "Pasado = Participio", "examples": [{"en": "He misunderstood the instructions.", "es": "Él malentendió las instrucciones."}]},{"present": "mow", "past": "mowed", "participle": "mown/mowed", "meanings": ["cortar (césped)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He mowed the lawn yesterday.", "es": "Cortó el césped ayer."}]},{"present": "offset", "past": "offset", "participle": "offset", "meanings": ["compensar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The bonus offset the lower salary.", "es": "El bono compensó el salario más bajo."}]},{"present": "outbid", "past": "outbid", "participle": "outbid", "meanings": ["pujar más alto que"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She outbid everyone at the auction.", "es": "Pujó más alto que todos en la subasta."}]},{"present": "outdo", "past": "outdid", "participle": "outdone", "meanings": ["superar / aventajar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She always tries to outdo herself.", "es": "Ella siempre intenta superarse a sí misma."}]},{"present": "outgrow", "past": "outgrew", "participle": "outgrown", "meanings": ["crecer más que / dejar atrás (una etapa)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He outgrew his old clothes quickly.", "es": "Le quedó pequeña la ropa vieja rápidamente."}]},{"present": "outrun", "past": "outran", "participle": "outrun", "meanings": ["correr más rápido que"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The cheetah easily outran the other animals.", "es": "El guepardo corrió más rápido que los otros animales fácilmente."}]},{"present": "outshine", "past": "outshone", "participle": "outshone", "meanings": ["superar / eclipsar (en brillo o destreza)"], "pattern": "Pasado = Participio", "examples": [{"en": "Her performance outshone everyone else's.", "es": "Su actuación eclipsó a la de todos los demás."}]},{"present": "overbid", "past": "overbid", "participle": "overbid", "meanings": ["pujar demasiado alto"], "pattern": "Igual en las 3 formas", "examples": [{"en": "He overbid on the house.", "es": "Pujó demasiado alto por la casa."}]},{"present": "overbreed", "past": "overbred", "participle": "overbred", "meanings": ["criar en exceso"], "pattern": "Pasado = Participio", "examples": [{"en": "They overbred the dogs.", "es": "Criaron demasiados perros."}]},{"present": "overcome", "past": "overcame", "participle": "overcome", "meanings": ["superar / sobreponerse a"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She overcame many obstacles to succeed.", "es": "Ella superó muchos obstáculos para triunfar."}]},{"present": "overdo", "past": "overdid", "participle": "overdone", "meanings": ["exagerar / excederse"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Don't overdo it with the spices.", "es": "No te excedas con las especias."}]},{"present": "overdraw", "past": "overdrew", "participle": "overdrawn", "meanings": ["girar en descubierto (una cuenta bancaria)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He overdrew his account by mistake.", "es": "Giró en descubierto su cuenta por error."}]},{"present": "overeat", "past": "overate", "participle": "overeaten", "meanings": ["comer en exceso"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He overate at the holiday dinner.", "es": "Comió en exceso en la cena de fiestas."}]},{"present": "overhang", "past": "overhung", "participle": "overhung", "meanings": ["sobresalir / proyectarse sobre algo"], "pattern": "Pasado = Participio", "examples": [{"en": "The balcony overhangs the street below.", "es": "El balcón sobresale sobre la calle de abajo."}]},{"present": "overhear", "past": "overheard", "participle": "overheard", "meanings": ["escuchar por casualidad"], "pattern": "Pasado = Participio", "examples": [{"en": "I overheard them talking about the project.", "es": "Escuché por casualidad que hablaban del proyecto."}]},{"present": "overlay", "past": "overlaid", "participle": "overlaid", "meanings": ["superponer / cubrir con una capa"], "pattern": "Pasado = Participio", "examples": [{"en": "The map is overlaid with population data.", "es": "El mapa está superpuesto con datos de población."}]},{"present": "overpay", "past": "overpaid", "participle": "overpaid", "meanings": ["pagar de más"], "pattern": "Pasado = Participio", "examples": [{"en": "We overpaid for the tickets.", "es": "Pagamos de más por las entradas."}]},{"present": "override", "past": "overrode", "participle": "overridden", "meanings": ["anular / invalidar (una decisión)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The manager overrode the committee's decision.", "es": "El gerente anuló la decisión del comité."}]},{"present": "overrun", "past": "overran", "participle": "overrun", "meanings": ["invadir / desbordar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Weeds overran the entire garden.", "es": "La maleza invadió todo el jardín."}]},{"present": "oversee", "past": "oversaw", "participle": "overseen", "meanings": ["supervisar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She oversees the entire production process.", "es": "Ella supervisa todo el proceso de producción."}]},{"present": "overshoot", "past": "overshot", "participle": "overshot", "meanings": ["pasarse (de un límite u objetivo)"], "pattern": "Pasado = Participio", "examples": [{"en": "The project overshot its original budget.", "es": "El proyecto se pasó de su presupuesto original."}]},{"present": "oversleep", "past": "overslept", "participle": "overslept", "meanings": ["quedarse dormido (más de la cuenta)"], "pattern": "Pasado = Participio", "examples": [{"en": "He overslept and missed the bus.", "es": "Se quedó dormido y perdió el bus."}]},{"present": "overtake", "past": "overtook", "participle": "overtaken", "meanings": ["adelantar / rebasar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The car overtook us on the highway.", "es": "El carro nos adelantó en la autopista."}]},{"present": "overthrow", "past": "overthrew", "participle": "overthrown", "meanings": ["derrocar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Rebels overthrew the government.", "es": "Los rebeldes derrocaron al gobierno."}]},{"present": "overwrite", "past": "overwrote", "participle": "overwritten", "meanings": ["sobrescribir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The new file overwrote the old one.", "es": "El archivo nuevo sobrescribió al antiguo."}]},{"present": "partake", "past": "partook", "participle": "partaken", "meanings": ["participar / tomar parte"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Guests are welcome to partake in the activities.", "es": "Los invitados pueden participar en las actividades."}]},{"present": "pay", "past": "paid", "participle": "paid", "meanings": ["pagar"], "pattern": "Pasado = Participio", "examples": [{"en": "She paid the bill in cash.", "es": "Ella pagó la cuenta en efectivo."}]},{"present": "plead", "past": "pled", "participle": "pled", "meanings": ["declararse (culpable/inocente)"], "pattern": "Pasado = Participio", "note": "En inglés británico también se usa la forma regular 'pleaded'.", "examples": [{"en": "The defendant pleaded not guilty.", "es": "El acusado se declaró inocente."}]},{"present": "proofread", "past": "proofread", "participle": "proofread", "meanings": ["corregir / revisar un texto"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She proofread the report before sending it.", "es": "Ella corrigió el informe antes de enviarlo."}]},{"present": "prove", "past": "proved", "participle": "proven", "meanings": ["probar / demostrar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He proved his theory with new evidence.", "es": "Él demostró su teoría con nueva evidencia."}]},{"present": "put", "past": "put", "participle": "put", "meanings": ["poner / colocar", "expresar / formular (put it another way)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She put the keys on the table.", "es": "Ella puso las llaves sobre la mesa."}, {"en": "Let me put it another way.", "es": "Déjame decirlo de otra manera."}]},{"present": "quick-freeze", "past": "quick-froze", "participle": "quick-frozen", "meanings": ["congelar rápidamente"], "pattern": "Las 3 formas distintas", "examples": [{"en": "They quick-froze the vegetables.", "es": "Congelaron rápidamente las verduras."}]},{"present": "quit", "past": "quit", "participle": "quit", "meanings": ["abandonar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "He quit his job last month.", "es": "Él renunció a su trabajo el mes pasado."}]},{"present": "read", "past": "read", "participle": "read", "meanings": ["leer", "estudiar (una carrera, inglés británico — ej. 'read law')"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She read the entire book in one night.", "es": "Ella leyó todo el libro en una noche."}, {"en": "He read law at Oxford.", "es": "Él estudió derecho en Oxford."}]},{"present": "rebid", "past": "rebid", "participle": "rebid", "meanings": ["volver a pujar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "They had to rebid the contract.", "es": "Tuvieron que volver a pujar por el contrato."}]},{"present": "rebroadcast", "past": "rebroadcast", "participle": "rebroadcast", "meanings": ["retransmitir"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The channel rebroadcast the interview later that night.", "es": "El canal retransmitió la entrevista más tarde esa noche."}]},{"present": "rebuild", "past": "rebuilt", "participle": "rebuilt", "meanings": ["Reconstruir"], "pattern": "Pasado = Participio", "examples": [{"en": "They rebuilt the house after the fire.", "es": "Reconstruyeron la casa después del incendio."}]},{"present": "recast", "past": "recast", "participle": "recast", "meanings": ["reformular / cambiar el reparto (de una obra)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The director recast the lead role.", "es": "El director cambió el reparto del papel principal."}]},{"present": "redo", "past": "redid", "participle": "redone", "meanings": ["rehacer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She had to redo the whole assignment.", "es": "Tuvo que rehacer toda la tarea."}]},{"present": "rend", "past": "rent", "participle": "rent", "meanings": ["rasgar / desgarrar"], "pattern": "Pasado = Participio", "examples": [{"en": "He rent his clothes in anger.", "es": "Rasgó su ropa de ira."}]},{"present": "resell", "past": "resold", "participle": "resold", "meanings": ["revender"], "pattern": "Pasado = Participio", "examples": [{"en": "He resold the tickets online.", "es": "Revendió las entradas en línea."}]},{"present": "retake", "past": "retook", "participle": "retaken", "meanings": ["volver a tomar / recuperar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The army retook the city.", "es": "El ejército recuperó la ciudad."}]},{"present": "retell", "past": "retold", "participle": "retold", "meanings": ["volver a contar"], "pattern": "Pasado = Participio", "examples": [{"en": "She retold the story to her children.", "es": "Ella volvió a contar la historia a sus hijos."}]},{"present": "rethink", "past": "rethought", "participle": "rethought", "meanings": ["reconsiderar / repensar"], "pattern": "Pasado = Participio", "examples": [{"en": "We need to rethink our strategy.", "es": "Necesitamos repensar nuestra estrategia."}]},{"present": "rewind", "past": "rewound", "participle": "rewound", "meanings": ["rebobinar"], "pattern": "Pasado = Participio", "examples": [{"en": "He rewound the tape to the beginning.", "es": "Él rebobinó la cinta hasta el principio."}]},{"present": "rewrite", "past": "rewrote", "participle": "rewritten", "meanings": ["reescribir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She rewrote the introduction three times.", "es": "Ella reescribió la introducción tres veces."}]},{"present": "rid", "past": "rid", "participle": "rid", "meanings": ["librar(se) (de algo) — get rid of"], "pattern": "Igual en las 3 formas", "note": "Librarse de algo", "examples": [{"en": "They finally got rid of the old furniture.", "es": "Finalmente se libraron de los muebles viejos."}]},{"present": "ride", "past": "rode", "participle": "ridden", "meanings": ["montar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He rode his bike to school.", "es": "Él montó en bicicleta a la escuela."}]},{"present": "ring", "past": "rang", "participle": "rung", "meanings": ["sonar / timbrar", "llamar por teléfono (inglés británico)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The phone rang three times.", "es": "El teléfono sonó tres veces."}, {"en": "I'll ring you later this evening.", "es": "Te llamaré más tarde esta noche."}]},{"present": "rise", "past": "rose", "participle": "risen", "meanings": ["elevarse / levantarse"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The sun rose over the mountains.", "es": "El sol se elevó sobre las montañas."}]},{"present": "rive", "past": "rived/rove", "participle": "riven/rived", "meanings": ["partir / hender"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The tree was riven by lightning.", "es": "El árbol fue partido por un rayo."}]},{"present": "run", "past": "ran", "participle": "run", "meanings": ["correr", "administrar / dirigir (un negocio)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She runs five miles every morning.", "es": "Ella corre cinco millas cada mañana."}, {"en": "He runs a small restaurant downtown.", "es": "Él administra un pequeño restaurante en el centro."}]},{"present": "saw", "past": "sawed", "participle": "sawn", "meanings": ["aserrar / cortar con sierra"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He sawed the wood into small pieces.", "es": "Él aserró la madera en trozos pequeños."}]},{"present": "say", "past": "said", "participle": "said", "meanings": ["decir"], "pattern": "Pasado = Participio", "examples": [{"en": "She said hello to everyone.", "es": "Ella les dijo hola a todos."}]},{"present": "see", "past": "saw", "participle": "seen", "meanings": ["ver"], "pattern": "Las 3 formas distintas", "examples": [{"en": "I saw a movie last weekend.", "es": "Vi una película el fin de semana pasado."}]},{"present": "seek", "past": "sought", "participle": "sought", "meanings": ["buscar"], "pattern": "Pasado = Participio", "examples": [{"en": "They sought help from a professional.", "es": "Buscaron ayuda de un profesional."}]},{"present": "sell", "past": "sold", "participle": "sold", "meanings": ["vender"], "pattern": "Pasado = Participio", "examples": [{"en": "He sold his old car online.", "es": "Vendió su carro viejo en línea."}]},{"present": "send", "past": "sent", "participle": "sent", "meanings": ["enviar"], "pattern": "Pasado = Participio", "examples": [{"en": "She sent the email this morning.", "es": "Ella envió el correo esta mañana."}]},{"present": "set", "past": "set", "participle": "set", "meanings": ["fijar", "ponerse (el sol)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "They set a date for the wedding.", "es": "Fijaron una fecha para la boda."}, {"en": "The sun sets early in winter.", "es": "El sol se pone temprano en invierno."}]},{"present": "sew", "past": "sewed", "participle": "sewn", "meanings": ["coser"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She sewed a button back on the shirt.", "es": "Ella cosió un botón de vuelta en la camisa."}]},{"present": "shake", "past": "shook", "participle": "shaken", "meanings": ["sacudir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He shook the bottle before opening it.", "es": "Él sacudió la botella antes de abrirla."}]},{"present": "shave", "past": "shaved", "participle": "shaven", "meanings": ["afeitar(se)"], "pattern": "Las 3 formas distintas", "note": "El participio regular 'shaved' también es común y aceptado.", "examples": [{"en": "He shaved before the interview.", "es": "Él se afeitó antes de la entrevista."}]},{"present": "shear", "past": "sheared/shore", "participle": "shorn/sheared", "meanings": ["esquilar / cortar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "They sheared the sheep in spring.", "es": "Esquilaron las ovejas en primavera."}]},{"present": "shed", "past": "shed", "participle": "shed", "meanings": ["derramar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She shed tears of joy.", "es": "Ella derramó lágrimas de alegría."}]},{"present": "shine", "past": "shone", "participle": "shone", "meanings": ["brillar"], "pattern": "Pasado = Participio", "examples": [{"en": "The stars shone brightly that night.", "es": "Las estrellas brillaron intensamente esa noche."}]},{"present": "shoe", "past": "shod", "participle": "shod", "meanings": ["herrar (un caballo)"], "pattern": "Pasado = Participio", "examples": [{"en": "The blacksmith shod the horse.", "es": "El herrero herró el caballo."}]},{"present": "shoot", "past": "shot", "participle": "shot", "meanings": ["disparar", "filmar / rodar (una película)"], "pattern": "Pasado = Participio", "examples": [{"en": "The hunter shot at the target.", "es": "El cazador disparó al blanco."}, {"en": "They shot the movie in three months.", "es": "Filmaron la película en tres meses."}]},{"present": "show", "past": "showed", "participle": "shown", "meanings": ["mostrar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She showed us her new apartment.", "es": "Ella nos mostró su nuevo apartamento."}]},{"present": "shrink", "past": "shrank", "participle": "shrunk", "meanings": ["encoger"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The sweater shrank in the wash.", "es": "El suéter encogió en el lavado."}]},{"present": "shrive", "past": "shrove/shrived", "participle": "shriven/shrived", "meanings": ["confesar (religioso)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The priest shrived the penitent.", "es": "El sacerdote confesó al penitente."}]},{"present": "shut", "past": "shut", "participle": "shut", "meanings": ["cerrar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "He shut the door quietly.", "es": "Él cerró la puerta silenciosamente."}]},{"present": "sing", "past": "sang", "participle": "sung", "meanings": ["cantar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She sang beautifully at the concert.", "es": "Ella cantó hermosamente en el concierto."}]},{"present": "sink", "past": "sank", "participle": "sunk", "meanings": ["hundir", "invertir dinero (en algo arriesgado)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The ship sank after hitting the rocks.", "es": "El barco se hundió después de chocar con las rocas."}, {"en": "He sank his savings into the new business.", "es": "Invirtió sus ahorros en el nuevo negocio."}]},{"present": "sit", "past": "sat", "participle": "sat", "meanings": ["sentar"], "pattern": "Pasado = Participio", "examples": [{"en": "They sat at the back of the room.", "es": "Se sentaron al fondo de la sala."}]},{"present": "slay", "past": "slew", "participle": "slain", "meanings": ["matar / masacrar (literario)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The knight slew the dragon.", "es": "El caballero mató al dragón."}]},{"present": "sleep", "past": "slept", "participle": "slept", "meanings": ["dormir"], "pattern": "Pasado = Participio", "examples": [{"en": "He slept for eight hours last night.", "es": "Él durmió ocho horas anoche."}]},{"present": "slide", "past": "slid", "participle": "slid", "meanings": ["deslizar"], "pattern": "Pasado = Participio", "examples": [{"en": "The kids slid down the hill on a sled.", "es": "Los niños se deslizaron por la colina en un trineo."}]},{"present": "sling", "past": "slung", "participle": "slung", "meanings": ["lanzar / colgar"], "pattern": "Pasado = Participio", "examples": [{"en": "He slung the bag over his shoulder.", "es": "Se colgó la bolsa al hombro."}]},{"present": "slink", "past": "slunk", "participle": "slunk", "meanings": ["escabullirse / caminar furtivamente"], "pattern": "Pasado = Participio", "examples": [{"en": "The cat slunk away when it saw us.", "es": "El gato se escabulló cuando nos vio."}]},{"present": "slit", "past": "slit", "participle": "slit", "meanings": ["cortar (un tajo)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "He slit the envelope open.", "es": "Él cortó el sobre para abrirlo."}]},{"present": "smell", "past": "smelt", "participle": "smelt", "meanings": ["oler"], "pattern": "Pasado = Participio", "examples": [{"en": "The kitchen smelled of fresh bread.", "es": "La cocina olía a pan fresco."}]},{"present": "smite", "past": "smote", "participle": "smitten", "meanings": ["golpear con fuerza (literario/bíblico)", "estar profundamente enamorado (be smitten)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Lightning smote the old tower.", "es": "Un rayo golpeó la vieja torre."}, {"en": "He was smitten with her from the start.", "es": "Él estaba profundamente enamorado de ella desde el principio."}]},{"present": "sneak", "past": "snuck/sneaked", "participle": "snuck/sneaked", "meanings": ["escabullirse"], "pattern": "Pasado = Participio", "note": "'Snuck' es más común en AmE.", "examples": [{"en": "He snuck into the room quietly.", "es": "Se escabulló en la habitación en silencio."}]},{"present": "sow", "past": "sowed", "participle": "sown", "meanings": ["sembrar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The farmer sowed the seeds in spring.", "es": "El agricultor sembró las semillas en primavera."}]},{"present": "speak", "past": "spoke", "participle": "spoken", "meanings": ["hablar", "hablar en nombre de / reflejar (speak volumes)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She spoke fluent English.", "es": "Ella hablaba inglés con fluidez."}, {"en": "Her silence spoke volumes.", "es": "Su silencio hablaba por sí solo."}]},{"present": "speed", "past": "sped", "participle": "sped", "meanings": ["acelerar"], "pattern": "Pasado = Participio", "examples": [{"en": "He sped up to catch the bus.", "es": "Él aceleró para alcanzar el bus."}]},{"present": "spell", "past": "spelt", "participle": "spelt", "meanings": ["deletrear"], "pattern": "Pasado = Participio", "examples": [{"en": "Can you spell your last name, please?", "es": "¿Puedes deletrear tu apellido, por favor?"}]},{"present": "spellbind", "past": "spellbound", "participle": "spellbound", "meanings": ["cautivar / hechizar"], "pattern": "Pasado = Participio", "examples": [{"en": "The magician's tricks spellbound the audience.", "es": "Los trucos del mago cautivaron al público."}]},{"present": "spend", "past": "spent", "participle": "spent", "meanings": ["gastar", "pasar (tiempo)"], "pattern": "Pasado = Participio", "examples": [{"en": "They spent a lot on the renovation.", "es": "Gastaron mucho en la remodelación."}, {"en": "We spent the weekend at the beach.", "es": "Pasamos el fin de semana en la playa."}]},{"present": "spill", "past": "spilt", "participle": "spilt", "meanings": ["derramar"], "pattern": "Pasado = Participio", "examples": [{"en": "He spilt coffee on his shirt.", "es": "Él derramó café en su camisa."}]},{"present": "spin", "past": "spun", "participle": "spun", "meanings": ["girar"], "pattern": "Pasado = Participio", "examples": [{"en": "The wheel spun rapidly.", "es": "La rueda giró rápidamente."}]},{"present": "spit", "past": "spat", "participle": "spat", "meanings": ["escupir"], "pattern": "Pasado = Participio", "examples": [{"en": "The child spat out the medicine.", "es": "El niño escupió la medicina."}]},{"present": "split", "past": "split", "participle": "split", "meanings": ["dividir"], "pattern": "Igual en las 3 formas", "examples": [{"en": "They split the bill evenly.", "es": "Dividieron la cuenta en partes iguales."}]},{"present": "spoil", "past": "spoilt", "participle": "spoilt", "meanings": ["estropear / dañar", "consentir (a alguien)"], "pattern": "Pasado = Participio", "note": "La connotación de consentir en inglés es negativa ya que consentir a alguien puede significar dañarlo Spoil también significa consentir a alguien. Tiene una connotación negativa en inglés", "examples": [{"en": "The rain spoiled our picnic plans.", "es": "La lluvia estropeó nuestros planes de picnic."}, {"en": "Grandparents love to spoil their grandchildren.", "es": "A los abuelos les encanta consentir a sus nietos."}]},{"present": "spread", "past": "spread", "participle": "spread", "meanings": ["extender"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She spread the map on the table.", "es": "Ella extendió el mapa sobre la mesa."}]},{"present": "spring", "past": "sprang", "participle": "sprung", "meanings": ["saltar (de repente)"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He sprang out of bed when the alarm rang.", "es": "Él saltó de la cama cuando sonó la alarma."}]},{"present": "stand", "past": "stood", "participle": "stood", "meanings": ["estar de pie", "soportar / tolerar (can't stand)"], "pattern": "Pasado = Participio", "examples": [{"en": "They stood in line for an hour.", "es": "Estuvieron de pie en la fila durante una hora."}, {"en": "I can't stand loud noises.", "es": "No soporto los ruidos fuertes."}]},{"present": "stave", "past": "stove/staved", "participle": "stove/staved", "meanings": ["evitar (stave off) / romper"], "pattern": "Pasado = Participio", "examples": [{"en": "They staved off the crisis.", "es": "Evitaron la crisis."}]},{"present": "steal", "past": "stole", "participle": "stolen", "meanings": ["robar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Someone stole her bicycle.", "es": "Alguien le robó la bicicleta."}]},{"present": "stick", "past": "stuck", "participle": "stuck", "meanings": ["adherir(se) / pegar(se)"], "pattern": "Pasado = Participio", "note": "Pegar de unir dos cosas con algún tipo de sustancia adherente", "examples": [{"en": "The label stuck to the box.", "es": "La etiqueta se pegó a la caja."}]},{"present": "sting", "past": "stung", "participle": "stung", "meanings": ["picar"], "pattern": "Pasado = Participio", "examples": [{"en": "A bee stung him on the arm.", "es": "Una abeja lo picó en el brazo."}]},{"present": "stink", "past": "stank", "participle": "stunk", "meanings": ["apestar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The garbage stank in the summer heat.", "es": "La basura apestaba con el calor del verano."}]},{"present": "strew", "past": "strewed", "participle": "strewn", "meanings": ["esparcir / desparramar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Leaves were strewn across the yard.", "es": "Las hojas estaban esparcidas por el patio."}]},{"present": "stride", "past": "strode", "participle": "stridden", "meanings": ["andar a zancadas"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He strode confidently into the room.", "es": "Él entró a la sala con paso decidido."}]},{"present": "strike", "past": "struck", "participle": "struck", "meanings": ["golpear", "hacer huelga"], "pattern": "Pasado = Participio", "examples": [{"en": "Lightning struck the tree.", "es": "Un rayo golpeó el árbol."}, {"en": "Workers struck for better wages.", "es": "Los trabajadores hicieron huelga por mejores salarios."}]},{"present": "string", "past": "strung", "participle": "strung", "meanings": ["ensartar / encordar"], "pattern": "Pasado = Participio", "examples": [{"en": "She strung the beads onto a necklace.", "es": "Ella ensartó las cuentas en un collar."}]},{"present": "strive", "past": "strove", "participle": "striven", "meanings": ["esforzarse"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He strives for excellence in everything he does.", "es": "Él se esfuerza por la excelencia en todo lo que hace."}]},{"present": "sublet", "past": "sublet", "participle": "sublet", "meanings": ["subarrendar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She sublet her apartment for the summer.", "es": "Ella subarrendó su apartamento durante el verano."}]},{"present": "swear", "past": "swore", "participle": "sworn", "meanings": ["jurar", "decir palabrotas / maldecir"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He swore to tell the truth.", "es": "Él juró decir la verdad."}, {"en": "She swore under her breath.", "es": "Ella maldijo entre dientes."}]},{"present": "sweep", "past": "swept", "participle": "swept", "meanings": ["barrer"], "pattern": "Pasado = Participio", "examples": [{"en": "He swept the kitchen floor.", "es": "Él barrió el piso de la cocina."}]},{"present": "swell", "past": "swelled", "participle": "swollen", "meanings": ["hinchar(se) / inflamarse"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Her ankle swelled after the fall.", "es": "Su tobillo se hinchó después de la caída."}]},{"present": "swim", "past": "swam", "participle": "swum", "meanings": ["nadar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She swims every morning before work.", "es": "Ella nada todas las mañanas antes de trabajar."}]},{"present": "swing", "past": "swung", "participle": "swung", "meanings": ["Balancear"], "pattern": "Pasado = Participio", "examples": [{"en": "The children swung happily in the park.", "es": "Los niños se balanceaban felices en el parque."}]},{"present": "take", "past": "took", "participle": "taken", "meanings": ["tomar / llevar", "llevar (tiempo) — it takes an hour"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He took the bus to work.", "es": "Él tomó el bus para ir al trabajo."}, {"en": "It takes an hour to get downtown.", "es": "Toma una hora llegar al centro."}]},{"present": "teach", "past": "taught", "participle": "taught", "meanings": ["enseñar"], "pattern": "Pasado = Participio", "examples": [{"en": "She taught math for twenty years.", "es": "Ella enseñó matemáticas durante veinte años."}]},{"present": "tear", "past": "tore", "participle": "torn", "meanings": ["romper"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He tore the paper in half.", "es": "Él rompió el papel en dos."}]},{"present": "telecast", "past": "telecast", "participle": "telecast", "meanings": ["transmitir por televisión"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The awards ceremony was telecast worldwide.", "es": "La ceremonia de premiación se transmitió a nivel mundial."}]},{"present": "tell", "past": "told", "participle": "told", "meanings": ["decir", "contar"], "pattern": "Pasado = Participio", "note": "tell es contar historias count es contar números (regular) count es contar números tell es contar historias", "examples": [{"en": "She told him the truth.", "es": "Ella le dijo la verdad."}, {"en": "He told us a funny story.", "es": "Él nos contó una historia graciosa."}]},{"present": "test-fly", "past": "test-flew", "participle": "test-flown", "meanings": ["probar en vuelo"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The pilot test-flew the new aircraft.", "es": "El piloto probó en vuelo la nueva aeronave."}]},{"present": "think", "past": "thought", "participle": "thought", "meanings": ["pensar"], "pattern": "Pasado = Participio", "examples": [{"en": "I thought about it all night.", "es": "Pensé en eso toda la noche."}]},{"present": "thrive", "past": "thrived/throve", "participle": "thrived/thriven", "meanings": ["prosperar / florecer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The business thrived under new management.", "es": "El negocio prosperó bajo la nueva dirección."}]},{"present": "throw", "past": "threw", "participle": "thrown", "meanings": ["lanzar", "organizar (una fiesta) — throw a party"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She threw the ball to her dog.", "es": "Ella le lanzó la pelota a su perro."}, {"en": "They threw a surprise party for her birthday.", "es": "Organizaron una fiesta sorpresa para su cumpleaños."}]},{"present": "thrust", "past": "thrust", "participle": "thrust", "meanings": ["empujar con fuerza"], "pattern": "Igual en las 3 formas", "examples": [{"en": "He thrust the door open.", "es": "Él empujó la puerta con fuerza para abrirla."}]},{"present": "tread", "past": "trode", "participle": "trodden", "meanings": ["pisar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Please tread carefully on the wet floor.", "es": "Por favor pisa con cuidado en el piso mojado."}]},{"present": "typecast", "past": "typecast", "participle": "typecast", "meanings": ["encasillar (a un actor en un tipo de papel)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "He was typecast as the villain early in his career.", "es": "Lo encasillaron como el villano al inicio de su carrera."}]},{"present": "typeset", "past": "typeset", "participle": "typeset", "meanings": ["componer tipográficamente"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The book was typeset by a small local press.", "es": "El libro fue compuesto tipográficamente por una pequeña imprenta local."}]},{"present": "typewrite", "past": "typewrote", "participle": "typewritten", "meanings": ["escribir a máquina"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She typewrote the report.", "es": "Escribió el informe a máquina."}]},{"present": "unbend", "past": "unbent", "participle": "unbent", "meanings": ["enderezar / relajarse"], "pattern": "Pasado = Participio", "examples": [{"en": "He finally unbent and joined the conversation.", "es": "Finalmente se relajó y se unió a la conversación."}]},{"present": "unbind", "past": "unbound", "participle": "unbound", "meanings": ["desatar / desligar"], "pattern": "Pasado = Participio", "examples": [{"en": "She unbound the ropes around the box.", "es": "Ella desató las cuerdas alrededor de la caja."}]},{"present": "underbid", "past": "underbid", "participle": "underbid", "meanings": ["pujar más bajo que"], "pattern": "Igual en las 3 formas", "examples": [{"en": "They underbid the competition.", "es": "Pujaron más bajo que la competencia."}]},{"present": "undercut", "past": "undercut", "participle": "undercut", "meanings": ["vender más barato que (la competencia)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The new store undercut all its competitors.", "es": "La nueva tienda vendió más barato que todos sus competidores."}]},{"present": "underfeed", "past": "underfed", "participle": "underfed", "meanings": ["subalimentar"], "pattern": "Pasado = Participio", "examples": [{"en": "The animals were underfed.", "es": "Los animales estaban subalimentados."}]},{"present": "undergo", "past": "underwent", "participle": "undergone", "meanings": ["pasar por"], "pattern": "Las 3 formas distintas", "note": "Pasar por una operación, por ejemplo.", "examples": [{"en": "She underwent surgery last week.", "es": "Ella pasó por una cirugía la semana pasada."}]},{"present": "underlie", "past": "underlay", "participle": "underlain", "meanings": ["subyacer / estar en la base de"], "pattern": "Las 3 formas distintas", "examples": [{"en": "Stress often underlies these headaches.", "es": "El estrés a menudo subyace a estos dolores de cabeza."}]},{"present": "underpay", "past": "underpaid", "participle": "underpaid", "meanings": ["pagar de menos"], "pattern": "Pasado = Participio", "examples": [{"en": "The company was accused of underpaying its staff.", "es": "Acusaron a la empresa de pagarle de menos a su personal."}]},{"present": "understand", "past": "understood", "participle": "understood", "meanings": ["comprender"], "pattern": "Pasado = Participio", "examples": [{"en": "I understand your concern.", "es": "Comprendo tu preocupación."}]},{"present": "undertake", "past": "undertook", "participle": "undertaken", "meanings": ["emprender"], "pattern": "Las 3 formas distintas", "examples": [{"en": "They undertook a major renovation project.", "es": "Emprendieron un gran proyecto de remodelación."}]},{"present": "underwrite", "past": "underwrote", "participle": "underwritten", "meanings": ["suscribir / respaldar financieramente"], "pattern": "Las 3 formas distintas", "examples": [{"en": "The bank underwrote the entire loan.", "es": "El banco respaldó financieramente todo el préstamo."}]},{"present": "undo", "past": "undid", "participle": "undone", "meanings": ["deshacer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He undid the top button of his shirt.", "es": "Él se desabrochó el botón superior de la camisa."}]},{"present": "unfreeze", "past": "unfroze", "participle": "unfrozen", "meanings": ["descongelar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She unfroze the chicken before cooking.", "es": "Ella descongeló el pollo antes de cocinarlo."}]},{"present": "unlearn", "past": "unlearnt/unlearned", "participle": "unlearnt/unlearned", "meanings": ["desaprender"], "pattern": "Pasado = Participio", "examples": [{"en": "It's hard to unlearn bad habits.", "es": "Es difícil desaprender malos hábitos."}]},{"present": "unmake", "past": "unmade", "participle": "unmade", "meanings": ["deshacer"], "pattern": "Pasado = Participio", "examples": [{"en": "The scandal unmade his reputation overnight.", "es": "El escándalo deshizo su reputación de la noche a la mañana."}]},{"present": "unsay", "past": "unsaid", "participle": "unsaid", "meanings": ["retractarse de lo dicho"], "pattern": "Pasado = Participio", "examples": [{"en": "Once said, those words could not be unsaid.", "es": "Una vez dichas, esas palabras no podían retractarse."}]},{"present": "unstick", "past": "unstuck", "participle": "unstuck", "meanings": ["despegar / desatascar"], "pattern": "Pasado = Participio", "examples": [{"en": "He unstuck the drawer with some oil.", "es": "Él desatascó el cajón con un poco de aceite."}]},{"present": "unwind", "past": "unwound", "participle": "unwound", "meanings": ["desenrollar", "relajarse, desestresarse"], "pattern": "Pasado = Participio", "examples": [{"en": "She unwound the garden hose.", "es": "Ella desenrolló la manguera del jardín."}, {"en": "He likes to unwind with music after work.", "es": "A él le gusta relajarse con música después del trabajo."}]},{"present": "uphold", "past": "upheld", "participle": "upheld", "meanings": ["defender / mantener (una decisión, un principio)"], "pattern": "Pasado = Participio", "examples": [{"en": "The court upheld the original ruling.", "es": "El tribunal mantuvo el fallo original."}]},{"present": "upset", "past": "upset", "participle": "upset", "meanings": ["disgustar / alterar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "The news upset her deeply.", "es": "La noticia la disgustó profundamente."}]},{"present": "vex", "past": "vexed/vext", "participle": "vexed/vext", "meanings": ["irritar / molestar"], "pattern": "Pasado = Participio", "examples": [{"en": "The delay vexed him greatly.", "es": "El retraso lo irritó mucho."}]},{"present": "wake", "past": "woke", "participle": "woken", "meanings": ["despertar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He woke up at six every day.", "es": "Él se despertaba a las seis todos los días."}]},{"present": "waylay", "past": "waylaid", "participle": "waylaid", "meanings": ["interceptar / abordar a alguien por sorpresa"], "pattern": "Pasado = Participio", "examples": [{"en": "A reporter waylaid him outside the building.", "es": "Un reportero lo interceptó por sorpresa afuera del edificio."}]},{"present": "wear", "past": "wore", "participle": "worn", "meanings": ["llevar puesto", "desgastar(se) (wear down/out)"], "pattern": "Las 3 formas distintas", "note": "Llevar algo puesto, ponerse ropa", "examples": [{"en": "She wore a red dress to the party.", "es": "Ella llevaba puesto un vestido rojo en la fiesta."}, {"en": "Years of use had worn down the tires.", "es": "Años de uso habían desgastado las llantas."}]},{"present": "weave", "past": "wove", "participle": "woven", "meanings": ["tejer"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She wove a beautiful blanket by hand.", "es": "Ella tejió una hermosa manta a mano."}]},{"present": "wed", "past": "wed/wedded", "participle": "wed/wedded", "meanings": ["casar(se)"], "pattern": "Igual en las 3 formas", "examples": [{"en": "They wed in a small ceremony.", "es": "Se casaron en una ceremonia pequeña."}]},{"present": "weep", "past": "wept", "participle": "wept", "meanings": ["llorar"], "pattern": "Pasado = Participio", "examples": [{"en": "She wept when she heard the news.", "es": "Ella lloró cuando escuchó la noticia."}]},{"present": "wend", "past": "wended", "participle": "wended", "meanings": ["dirigirse / ir"], "pattern": "Pasado = Participio", "note": "Arcaico; se usa sobre todo en 'wend one's way'.", "examples": [{"en": "They wended their way home.", "es": "Se dirigieron a casa."}]},{"present": "wet", "past": "wet/wetted", "participle": "wet/wetted", "meanings": ["mojar"], "pattern": "Igual en las 3 formas", "examples": [{"en": "She wet the cloth before cleaning.", "es": "Mojó el paño antes de limpiar."}]},{"present": "win", "past": "won", "participle": "won", "meanings": ["ganar", "ganarse (la confianza, el afecto de alguien)"], "pattern": "Pasado = Participio", "examples": [{"en": "They won the championship last year.", "es": "Ganaron el campeonato el año pasado."}, {"en": "He slowly won her trust.", "es": "Él poco a poco se ganó su confianza."}]},{"present": "wind", "past": "Wound", "participle": "wound", "meanings": ["enroscar"], "pattern": "Pasado = Participio", "note": "La pronunciación es /waind/", "examples": [{"en": "He wound the rope around the pole.", "es": "Él enroscó la cuerda alrededor del poste."}]},{"present": "withdraw", "past": "Withdrew", "participle": "withdrawn", "meanings": ["retirar"], "pattern": "Las 3 formas distintas", "examples": [{"en": "She withdrew $100 from her account.", "es": "Ella retiró 100 dólares de su cuenta."}]},{"present": "withhold", "past": "withheld", "participle": "withheld", "meanings": ["retener / negarse a dar"], "pattern": "Pasado = Participio", "examples": [{"en": "He withheld important information from the team.", "es": "Él retuvo información importante al equipo."}]},{"present": "withstand", "past": "Withstood", "participle": "withstood", "meanings": ["resistir"], "pattern": "Pasado = Participio", "examples": [{"en": "The bridge withstood the earthquake.", "es": "El puente resistió el terremoto."}]},{"present": "wring", "past": "wrung", "participle": "wrung", "meanings": ["retorcer"], "pattern": "Pasado = Participio", "examples": [{"en": "She wrung out the wet towel.", "es": "Ella retorció la toalla mojada."}]},{"present": "write", "past": "wrote", "participle": "written", "meanings": ["escribir", "redactar / anotar oficialmente"], "pattern": "Las 3 formas distintas", "examples": [{"en": "He wrote a letter to his friend.", "es": "Él le escribió una carta a su amigo."}, {"en": "The clerk wrote down her details.", "es": "El empleado anotó sus datos oficialmente."}]}];
+
+let state = {
+  query: '',
+  letter: null
+};
+
+const alphaRail = document.getElementById('alphaRail');
+const temaRail = document.getElementById('temaRail');
+const listEl = document.getElementById('list');
+const resultCountEl = document.getElementById('resultCount');
+const activeFiltersEl = document.getElementById('activeFilters');
+const searchInput = document.getElementById('search');
+
+
+// build letter counts
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+function letterCounts(){
+  const c = {};
+  IDX.forEach(item => {
+    const l = item.present[0].toUpperCase();
+    c[l] = (c[l]||0)+1;
+  });
+  return c;
+}
+
+function renderAlphaRail(){
+  const sel = document.getElementById('letraSelect');
+  const lc = letterCounts();
+  if(sel.dataset.built){ sel.value = state.letter || ''; return; }
+  sel.dataset.built = '1';
+  let opts = '<option value="">Todas las letras</option>';
+  ALPHABET.forEach(l => {
+    if(lc[l]) opts += `<option value="${l}">${l} (${lc[l]})</option>`;
+  });
+  sel.innerHTML = opts;
+  sel.value = state.letter || '';
+  sel.addEventListener('change', () => {
+    state.letter = sel.value || null;
+    render();
+  });
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function highlightExample(sentence, phrase){
+  const escaped = escapeHtml(sentence);
+  const escPhrase = escapeHtml(phrase).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const wholeMatch = new RegExp('\\b' + escPhrase + '\\b', 'i');
+  if(wholeMatch.test(escaped)){
+    return escaped.replace(wholeMatch, m => '<strong>' + m + '</strong>');
+  }
+  // fallback: bold each word of the phrase individually (handles separated phrasal verbs)
+  const words = phrase.split(/\s+/).map(w => escapeHtml(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  let result = escaped;
+  words.forEach(w => {
+    const re = new RegExp('\\b' + w + '\\b', 'i');
+    result = result.replace(re, m => '<strong>' + m + '</strong>');
+  });
+  return result;
+}
+
+function matchesGlossary(item, q){
+  if(!q) return true;
+  q = q.toLowerCase();
+  if(item.present.toLowerCase().includes(q)) return true;
+  if(item.past.toLowerCase().includes(q)) return true;
+  if(item.participle.toLowerCase().includes(q)) return true;
+  if(item.meanings.some(m => m.toLowerCase().includes(q))) return true;
+  return false;
+}
+
+let currentData = [];
+let renderedCount = 0;
+const BATCH_SIZE = 60;
+let observer = null;
+
+function buildRow(item){
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.setAttribute('role','button');
+  row.setAttribute('tabindex','0');
+  row.setAttribute('aria-expanded','false');
+
+  const head = document.createElement('div');
+  head.className = 'row-head';
+
+  const caret = document.createElement('span');
+  caret.className = 'caret';
+  head.appendChild(caret);
+
+  const verbSpan = document.createElement('span');
+  verbSpan.className = 'verb';
+  verbSpan.innerHTML = escapeHtml(item.present);
+  verbSpan.style.minWidth = '120px';
+  head.appendChild(verbSpan);
+
+  const preview = document.createElement('span');
+  preview.className = 'preview';
+  preview.textContent = (item.meanings && item.meanings[0]) || '';
+  head.appendChild(preview);
+
+  row.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'row-body';
+
+  const conjugationBox = document.createElement('div');
+  conjugationBox.style.display = 'flex';
+  conjugationBox.style.gap = '10px';
+  conjugationBox.style.flexWrap = 'wrap';
+  conjugationBox.style.marginBottom = '4px';
+  [['Presente', item.present], ['Pasado', item.past], ['Participio', item.participle]].forEach(([label, val]) => {
+    const cell = document.createElement('div');
+    cell.style.background = 'var(--paper-2)';
+    cell.style.borderRadius = '8px';
+    cell.style.padding = '8px 14px';
+    cell.style.minWidth = '90px';
+    cell.innerHTML = `<div style="font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px;">${label}</div><div style="font-size:14.5px;font-weight:800;color:var(--ink);">${escapeHtml(val)}</div>`;
+    conjugationBox.appendChild(cell);
+  });
+  body.appendChild(conjugationBox);
+
+  if(item.meanings && item.meanings.length){
+    item.meanings.forEach((m, idx) => {
+      const senseWrap = document.createElement('div');
+      senseWrap.style.marginBottom = '14px';
+
+      const p = document.createElement('p');
+      p.style.margin = '0 0 6px';
+      p.style.fontSize = '14.5px';
+      p.style.lineHeight = '1.5';
+      p.style.fontWeight = '700';
+      p.style.color = 'var(--ink)';
+      p.textContent = (item.meanings.length > 1 ? (idx+1) + '. ' : '') + m;
+      senseWrap.appendChild(p);
+
+      const ex = item.examples && item.examples[idx];
+      if(ex){
+        const exBox = document.createElement('div');
+        exBox.className = 'example-box';
+        exBox.style.margin = '0';
+        const exLabel = document.createElement('span');
+        exLabel.className = 'example-label';
+        exLabel.textContent = 'EJEMPLO';
+        const exTextEn = document.createElement('p');
+        exTextEn.className = 'example-text';
+        exTextEn.textContent = ex.en;
+        const exTextEs = document.createElement('p');
+        exTextEs.className = 'example-text';
+        exTextEs.style.color = 'var(--ink-soft)';
+        exTextEs.style.fontStyle = 'italic';
+        exTextEs.style.marginTop = '2px';
+        exTextEs.textContent = ex.es;
+        exBox.appendChild(exLabel);
+        exBox.appendChild(exTextEn);
+        exBox.appendChild(exTextEs);
+        senseWrap.appendChild(exBox);
+      }
+
+      body.appendChild(senseWrap);
+    });
+  }
+
+  if(item.note){
+    const noteBox = document.createElement('div');
+    noteBox.style.marginTop = '10px';
+    noteBox.style.padding = '10px 14px';
+    noteBox.style.background = '#FFF8E8';
+    noteBox.style.borderLeft = '3px solid #E8A93A';
+    noteBox.style.borderRadius = '6px';
+    noteBox.style.fontSize = '13px';
+    noteBox.style.color = 'var(--ink-soft)';
+    noteBox.textContent = '💡 ' + item.note;
+    body.appendChild(noteBox);
+  }
+
+  if(item.pattern){
+    const tagsWrap = document.createElement('div');
+    tagsWrap.style.marginTop = '10px';
+    const temaTag = document.createElement('span');
+    temaTag.className = 'tema-tag';
+    temaTag.style.marginTop = '0';
+    temaTag.textContent = item.pattern;
+    tagsWrap.appendChild(temaTag);
+    body.appendChild(tagsWrap);
+  }
+
+  row.appendChild(body);
+
+  function toggle(){
+    const open = row.getAttribute('aria-expanded') === 'true';
+    row.setAttribute('aria-expanded', open ? 'false' : 'true');
+  }
+  head.addEventListener('click', toggle);
+  row.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+  });
+
+  return row;
+}
+
+function renderNextBatch(){
+  const slice = currentData.slice(renderedCount, renderedCount + BATCH_SIZE);
+  if(slice.length === 0) return;
+  const frag = document.createDocumentFragment();
+  slice.forEach(item => frag.appendChild(buildRow(item)));
+  const sentinel = document.getElementById('scrollSentinel');
+  if(sentinel){
+    listEl.insertBefore(frag, sentinel);
+  } else {
+    listEl.appendChild(frag);
+  }
+  renderedCount += slice.length;
+
+  if(renderedCount >= currentData.length){
+    const sentinelEl = document.getElementById('scrollSentinel');
+    if(sentinelEl) sentinelEl.remove();
+    if(observer) observer.disconnect();
+  }
+}
+
+function render(){
+  renderAlphaRail();
+  const q = state.query.trim();
+
+  const data = IDX.filter(item => {
+    if(state.letter && item.present[0].toUpperCase() !== state.letter) return false;
+    return matchesGlossary(item, q);
+  });
+
+  resultCountEl.textContent = data.length + ' resultado' + (data.length===1?'':'s');
+  const filterBits = [];
+  if(state.letter) filterBits.push('letra: ' + state.letter);
+  activeFiltersEl.textContent = filterBits.join(' · ');
+
+  if(observer) observer.disconnect();
+  listEl.innerHTML = '';
+
+  if(data.length === 0){
+    if(q){
+      const cleanQ = q.replace(/[^a-zA-Záéíóúñ\s]/g, '').trim();
+      listEl.innerHTML = `<div class="empty" style="text-align:left; max-width:480px; margin:0 auto;">
+        <p style="font-size:15px; font-weight:800; color:var(--ink); margin:0 0 8px;">🤔 "${escapeHtml(cleanQ)}" no está en la lista de verbos irregulares.</p>
+        <p style="font-size:13.5px; font-weight:500; color:var(--ink-soft); line-height:1.6; margin:0;">
+          Es muy probable que sea un <strong>verbo regular</strong>. Recuerda: los verbos regulares forman el pasado y el participio agregando <strong>-ED</strong> al final (o solo <strong>-D</strong> si ya terminan en E).<br><br>
+          Ejemplo: <em>walk → walked → walked</em>
+        </p>
+      </div>`;
+    } else {
+      listEl.innerHTML = '<div class="empty">No encontramos coincidencias.<br>Prueba con otra palabra o quita el filtro.</div>';
+    }
+    return;
+  }
+
+  currentData = data;
+  renderedCount = 0;
+
+  const sentinel = document.createElement('div');
+  sentinel.id = 'scrollSentinel';
+  sentinel.style.height = '1px';
+  listEl.appendChild(sentinel);
+
+  renderNextBatch();
+
+  if(currentData.length > renderedCount){
+    observer = new IntersectionObserver((entries) => {
+      if(entries[0].isIntersecting){
+        renderNextBatch();
+      }
+    }, { root: null, rootMargin: '600px' });
+    observer.observe(sentinel);
+  }
+}
+
+let debounceTimer;
+searchInput.addEventListener('input', (e) => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    state.query = e.target.value;
+    render();
+  }, 120);
+});
+
+const urlParams = new URLSearchParams(window.location.search);
+const qParam = urlParams.get("q");
+if(qParam){
+  searchInput.value = qParam;
+  state.query = qParam;
+}
+render();
+</script>
+</div>
+</div>
+</body>
+</html>
